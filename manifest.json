@@ -1,0 +1,8 @@
+{
+"name": "Rise to Glory",
+"short_name": "Rise to Glory",
+"start_url": "./index.html",
+"display": "standalone",
+"background_color": "#08090c",
+"theme_color": "#08090c"
+}

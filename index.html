@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rise to Glory | E Games Studios</title>
+<style>
+:root{--bg:#080d18;--panel:#101a2b;--panel2:#142239;--line:#263751;--gold:#e6bd63;--muted:#91a1b8;--white:#f4f6fb;--green:#4bd19a;--red:#ff7272}
+*{box-sizing:border-box}body{margin:0;background:#08090c;color:#eef0f3;font-family:Inter,system-ui,sans-serif;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer;border:1px solid #344761;background:#1a2a42;color:white;border-radius:10px;padding:10px 13px;transition:.2s}button:hover{border-color:var(--gold);transform:translateY(-1px)}button.primary{background:linear-gradient(135deg,#e8c775,#a9782b);color:#101521;border:0;font-weight:800}button.ghost{background:transparent}.wrap{max-width:1440px;margin:auto;padding:22px}.brand{font-size:30px;font-weight:950;font-style:italic;letter-spacing:3px;color:var(--gold);text-shadow:0 0 18px #e6bd6355;transform:skewX(-9deg)}.sub{color:var(--muted)}.hero{min-height:90vh;display:grid;place-items:center;text-align:center;background:linear-gradient(120deg,#080d18dd,#101c30dd),repeating-linear-gradient(90deg,#ffffff08 0 1px,transparent 1px 80px)}.hero h1{font-size:clamp(50px,10vw,110px);font-style:italic;font-weight:1000;letter-spacing:-3px;margin:0;text-shadow:0 0 35px #e6bd6370;animation:logoReveal 2.8s cubic-bezier(.2,.8,.2,1) both,glow 2.6s 2.8s infinite alternate;transform:skewX(-12deg)}.hero p{color:#a9b6c9;letter-spacing:3px}.hero button{margin-top:24px;padding:15px 28px}@keyframes glow{to{transform:skewX(-12deg) scale(1.04);text-shadow:0 0 55px #e6bd63}}@keyframes logoReveal{0%{opacity:0;transform:skewX(-12deg) translateY(28px) scale(.78);filter:blur(12px);text-shadow:0 0 0 transparent}55%{opacity:1;filter:blur(0);text-shadow:0 0 45px #e6bd63}100%{opacity:1;transform:skewX(-12deg) translateY(0) scale(1);filter:blur(0)}}.grid{display:grid;gap:14px}.teams{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:20px}.team,.card{background:linear-gradient(145deg,#142239,#0e1726);border:1px solid var(--line);border-radius:16px;padding:16px}.team{cursor:pointer;transition:.2s}.team:hover,.team.selected{border-color:var(--gold);transform:translateY(-3px)}.crest{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#243a58;color:var(--gold);font-weight:900;font-size:19px;border:1px solid #52627b}.teamtop{display:flex;align-items:center;gap:12px}.team h3{margin:0}.metric{display:flex;justify-content:space-between;color:var(--muted);padding-top:8px;font-size:12px}.hidden{display:none!important}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px;margin-top:18px}.nav{display:flex;flex-direction:column;gap:6px}.nav button{text-align:left;background:transparent;border-color:transparent;color:#b7c4d7}.nav button.active{background:#1b2d47;border-color:#344a68;color:var(--gold)}.content{min-width:0}
+.home-dashboard{min-height:calc(100vh - 150px);padding:clamp(14px,2.5vw,26px);border-radius:22px;background:radial-gradient(ellipse at 12% 0%,#25282d 0,transparent 43%),radial-gradient(ellipse at 95% 95%,#171a20 0,transparent 38%),linear-gradient(135deg,#111317 0%,#191c22 52%,#0c0e12 100%);border:1px solid #ffffff18;box-shadow:inset 0 1px #ffffff0b,0 18px 45px #0003;animation:pageIn .3s ease-out both}
+.home-dashboard .sectionhead h2{color:#f0f1f3}
+.home-dashboard .sectionhead .small{color:#aeb3bc}
+.home-dashboard .sectionhead .tag{border-color:#ffffff20;background:#252930;color:#d7dbe1}
+.home-dashboard .card{background:linear-gradient(145deg,#24272d,#171a20);border-color:#ffffff18;box-shadow:0 10px 24px #0006}
+.home-dashboard .stat strong{color:#e2e5e9}
+.home-dashboard .stat span,.home-dashboard .metric{color:#b8bdc6}
+.home-dashboard .card h3{color:#eceef1}
+.home-nav{width:100%;display:flex;align-items:center;gap:10px;padding:13px 14px;margin-bottom:5px;text-align:left;font-weight:850;background:linear-gradient(135deg,#292d34,#171a20)!important;border:1px solid #ffffff20!important;color:#e7e9ed!important;border-radius:13px!important;box-shadow:0 6px 18px #0003}
+.home-nav .home-nav-icon{font-size:20px;line-height:1;color:#d4d8df}
+.home-nav.active{background:linear-gradient(135deg,#3a3f48,#242830)!important;border-color:#aeb4bf!important;color:#fff!important}
+.home-nav:hover{filter:brightness(1.16);transform:translateY(-2px)}
+.stats{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin:16px 0}.stat strong{display:block;font-size:22px;color:var(--gold)}.stat span{color:var(--muted);font-size:12px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:4px 0 14px}.sectionhead h2{margin:0;font-size:22px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid #263751}th{color:var(--gold);font-size:12px;text-transform:uppercase;background:#142239}tr:last-child td{border:0}tr:hover td{background:#ffffff08}.tag{font-size:11px;color:#b8c7da;background:#253750;padding:3px 7px;border-radius:20px}.good{color:var(--green)}.bad{color:var(--red)}.actions{display:flex;gap:8px;flex-wrap:wrap}.field{background:#0b1422;color:white;border:1px solid #344761;border-radius:9px;padding:10px;width:100%}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.pitch{background:repeating-linear-gradient(0deg,#17613f,#17613f 50px,#1b6b45 50px,#1b6b45 100px);border:5px solid #dce9d5;border-radius:16px;min-height:420px;position:relative;padding:20px;display:flex;flex-direction:column;justify-content:space-around;align-items:center}.lineup{display:flex;justify-content:space-around;width:100%;gap:8px}.playerdot{background:#f2f4ec;color:#122333;border-radius:50%;width:46px;height:46px;display:grid;place-items:center;font-size:11px;font-weight:900;border:2px solid #d9b45b;cursor:pointer}.feed{height:240px;overflow:auto;background:#091321;border:1px solid var(--line);padding:12px;border-radius:12px}.feed p{animation:commentIn .28s ease-out both}.livepulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff6262;box-shadow:0 0 10px #ff6262;animation:pulse 1s infinite;margin-right:7px}@keyframes pulse{50%{opacity:.35;transform:scale(.75)}}@keyframes commentIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}.matchclock{font-size:24px;font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums}.feed p{margin:0 0 8px}.score{font-size:42px;font-weight:900;color:var(--gold);text-align:center}.modal{position:fixed;inset:0;background:#000b;display:grid;place-items:center;padding:18px;z-index:9}.modalbox{width:min(560px,100%);background:#111d30;border:1px solid #53647c;border-radius:18px;padding:22px;max-height:90vh;overflow:auto}.toast{position:fixed;bottom:18px;right:18px;background:#203754;border:1px solid var(--gold);padding:12px 18px;border-radius:10px;z-index:20}.small{font-size:12px;color:var(--muted)}
+.tactics-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:14px;margin-top:14px;align-items:start}
+.pitch-editor{background:repeating-linear-gradient(0deg,#17613f,#17613f 50px,#1b6b45 50px,#1b6b45 100px);border:5px solid #dce9d5;border-radius:16px;min-height:570px;position:relative;overflow:hidden}
+.pitch-editor:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid #ffffff80}
+.pitch-editor:after{content:"";position:absolute;width:110px;height:110px;border:2px solid #ffffff80;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
+.pitch-slot{position:absolute;transform:translate(-50%,-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:58px;padding:3px;border-radius:10px;border:1px dashed #ffffff55;background:#071b1680;cursor:pointer;touch-action:none}
+.pitch-slot.drop-target{background:#e6bd6388;border-color:var(--gold)}.pitch-slot .playerdot{width:42px;height:42px}.pitch-slot small{font-size:9px;color:white;text-shadow:0 1px 3px #000;max-width:78px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bench{max-height:570px;overflow:auto}.bench-player{display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;margin:0 0 6px;text-align:left;padding:8px;font-size:12px;touch-action:none}.bench-player.selected-player{border-color:var(--gold);background:#35445a}.bench-player span{color:var(--muted);font-size:10px}
+.xi-editor{margin-top:14px}.xi-row{display:grid;grid-template-columns:34px minmax(120px,1fr) minmax(190px,1.2fr);gap:10px;align-items:center;padding:9px 0;border-top:1px solid #263751}.xi-number{width:30px;height:30px;border-radius:8px;background:#243a58;color:var(--gold);display:grid;place-items:center;font-weight:900}.xi-current{display:flex;flex-direction:column;min-width:0}.xi-current b{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.xi-current small,.bench-tile span{color:var(--muted);font-size:11px}.xi-select{min-width:0;font-size:12px}.bench-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:7px}.bench-tile{display:flex;flex-direction:column;gap:3px;padding:9px;background:#0b1422;border:1px solid #263751;border-radius:9px;font-size:12px}@media(max-width:600px){.xi-row{grid-template-columns:30px minmax(0,1fr);gap:7px}.xi-select{grid-column:2;width:100%}.xi-current b{white-space:normal}}
+.leader-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+@media(max-width:760px){.tactics-layout{grid-template-columns:1fr}.pitch-editor{min-height:510px}.bench{max-height:300px}}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.nav{display:flex;flex-direction:column;gap:7px}.nav button{font-size:12px;padding:10px}.wrap{padding:14px}.pitch{min-height:350px}}
+
+.splash{min-height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden;position:relative;background:radial-gradient(ellipse at 50% 38%,#203957 0,#0b1423 48%,#060a12 100%)}
+.splash:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,#ffffff0b 48%,transparent 60%);transform:translateX(-100%);animation:sweep 2.2s 1.1s ease-in-out forwards}
+.splash-inner{width:min(620px,88vw);position:relative;z-index:1}
+.studio-mark,.game-mark{font-style:italic;font-weight:950;letter-spacing:1px;text-shadow:0 0 24px #e6bd6355}
+.studio-mark{font-size:clamp(25px,6vw,42px);animation:riseIn 1s both}
+.game-mark{font-size:clamp(43px,10vw,78px);color:var(--gold);margin:20px 0 34px;animation:riseIn 1s .85s both}
+.loading-label{color:#c4cfdd;letter-spacing:3px;font-size:12px;animation:pulse 1.2s infinite}
+.progress-track{height:5px;width:min(360px,80vw);margin:13px auto 0;background:#ffffff20;border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#a9782b,#f4d88d);border-radius:20px;animation:loadBar 3.8s .3s ease-in-out forwards}
+@keyframes riseIn{from{opacity:0;transform:translateY(24px) scale(.94);filter:blur(9px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes sweep{to{transform:translateX(100%)}}
+@keyframes loadBar{0%{width:0}100%{width:100%}}
+.main-menu{min-height:100svh;display:grid;place-items:center;padding:28px;text-align:center;background:radial-gradient(ellipse at 15% 15%,#075b50 0,transparent 43%),radial-gradient(ellipse at 88% 85%,#8a4a1c 0,transparent 39%),linear-gradient(135deg,#061b1a 0%,#102b27 48%,#101714 100%);position:relative;overflow:hidden}
+.main-menu:before{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 25%,#b8f3d51a 48%,transparent 70%);background-size:220% 100%;animation:menuShimmer 8s linear infinite;pointer-events:none}
+@keyframes menuShimmer{to{background-position:-220% 0}}
+.menu-panel{width:min(510px,100%);padding:clamp(25px,6vw,46px);border:1px solid #ffffff20;border-radius:28px;background:linear-gradient(145deg,#173c35f2,#14221ff7);border-color:#8cc9a544;box-shadow:0 28px 90px #020b09cc,0 0 45px #53d6a326;backdrop-filter:blur(14px);animation:riseIn .65s both}
+.menu-logo{font-size:clamp(42px,9vw,70px);font-style:italic;font-weight:1000;letter-spacing:-2px;color:#f0c477;text-shadow:0 0 28px #d99b4380}
+.menu-quote{font-size:14px;line-height:1.8;color:#c4cfdd;margin:17px auto 27px;max-width:360px}
+.menu-actions{display:grid;gap:10px;max-width:290px;margin:auto}
+.menu-actions button{padding:15px 20px;font-weight:800;letter-spacing:.4px;border-radius:13px;background:linear-gradient(135deg,#246b59,#17463d);border:1px solid #8bd4b366}
+.menu-actions button.primary{background:linear-gradient(135deg,#a9baff,#6c78e8);color:#101329;border:0}
+.menu-foot{margin-top:25px;color:#71839d;font-size:10px;letter-spacing:2px}
+button:active{transform:scale(.96);filter:brightness(1.2)}
+button.tap-pop{animation:tapPop .32s ease-out}
+@keyframes tapPop{0%{transform:scale(1)}38%{transform:scale(.94);filter:brightness(1.35)}100%{transform:scale(1);filter:brightness(1)}}
+button:focus-visible{outline:2px solid #a9baff;outline-offset:3px}
+.finance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 18px;padding:6px;background:#0a1020;border:1px solid #ffffff14;border-radius:13px;width:max-content;max-width:100%}
+.finance-tabs button{min-width:135px;background:transparent;border-color:transparent;color:#b8c4dc}
+.finance-tabs button.selected{background:linear-gradient(135deg,#34477f,#25234f);border-color:#829aff66;color:#fff;box-shadow:0 5px 18px #05081788}
+.scoreboard{display:flex;justify-content:center;align-items:center;gap:18px;padding:15px 20px;margin:12px auto 10px;max-width:340px;border-radius:18px;background:linear-gradient(135deg,#152b49,#10182e);border:1px solid #6f8fc8;box-shadow:0 12px 32px #0005;transition:box-shadow .25s,border-color .25s}
+.scoreboard .score{min-width:100px;font-variant-numeric:tabular-nums}
+.scoreboard.goal-flash{animation:goalFlash .9s cubic-bezier(.2,.8,.2,1);border-color:#ffe27a;box-shadow:0 0 0 3px #ffe27a33,0 0 34px #ffcf4d99}
+.scoreboard.goal-flash .score{animation:scoreBump .65s cubic-bezier(.2,.8,.2,1)}
+@keyframes goalFlash{0%{transform:scale(1);filter:brightness(1)}22%{transform:scale(1.075);filter:brightness(1.65)}55%{transform:scale(.985);filter:brightness(1.25)}100%{transform:scale(1);filter:brightness(1)}}
+@keyframes scoreBump{0%{transform:scale(1)}35%{transform:scale(1.38);color:#fff1a8;text-shadow:0 0 22px #ffdf68}100%{transform:scale(1)}}
+.nav-group{border:1px solid #ffffff18;border-radius:13px;background:linear-gradient(135deg,#111f30,#0b1421);overflow:hidden;margin-bottom:7px;transition:border-color .2s,background .2s}
+.nav-group[open]{border-color:#d2a85b88;background:linear-gradient(135deg,#182b35,#101b25)}
+.nav-group summary{list-style:none;cursor:pointer;padding:11px 12px;color:#91a1b8;font-size:11px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+.nav-group summary::-webkit-details-marker{display:none}
+.nav-group summary:after{content:'＋';color:#e6bd63;font-size:14px;transition:transform .2s}
+.nav-group[open] summary:after{content:'−';transform:rotate(180deg)}
+.nav-group .nav-links{display:grid;gap:3px;padding:0 6px 7px}
+.nav-group .nav-links button{width:100%;font-size:12px;padding:9px 10px;border-radius:8px}
+.nav-group .nav-links button.active{background:#1b2d47;border-color:#344a68;color:var(--gold)}
+.content{animation:pageIn .28s ease-out both}
+@keyframes pageIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:760px){.nav{display:flex;flex-direction:column;gap:7px}.home-nav{margin-bottom:2px}.nav-group{margin:0}.nav-group summary{padding:12px 13px;font-size:11px}.nav-group .nav-links button{font-size:12px;padding:10px}}
+.tutorial-list{display:grid;gap:12px;margin:20px 0}
+.tutorial-step{display:flex;gap:13px;align-items:flex-start;padding:14px;background:#0b1422;border:1px solid var(--line);border-radius:12px;text-align:left}
+.tutorial-number{flex:0 0 30px;height:30px;display:grid;place-items:center;border-radius:50%;background:#e6bd63;color:#101521;font-weight:900}
+.tutorial-step b{display:block;margin-bottom:4px;color:var(--gold)}
+@media(prefers-reduced-motion:reduce){.splash *,.menu-panel{animation:none!important}}
+
+
+/* Refined black + charcoal theme */
+html,body{background:#08090c!important;color:#edf0f4}
+.app,.shell,.layout,.main,.content{background-color:transparent}
+body{background:linear-gradient(145deg,#08090c 0%,#0b0d11 58%,#08090c 100%)!important}
+.home-dashboard{background:linear-gradient(145deg,#15181e 0%,#101318 55%,#0c0e12 100%)!important;border:1px solid #303640!important;box-shadow:inset 0 1px #ffffff08,0 18px 45px #0008!important}
+.home-dashboard .card{background:linear-gradient(145deg,#20242b,#171a20)!important;border:1px solid #343a44!important;color:#edf0f4}
+.home-dashboard .sectionhead h2,.home-dashboard .card h3{color:#f0f2f5!important}
+.home-dashboard .sectionhead .small,.home-dashboard .stat span,.home-dashboard .metric{color:#aeb5c0!important}
+.home-dashboard .stat strong{color:#e4e8ee!important}
+.home-dashboard .tag{background:#222831!important;border:1px solid #3a424e!important;color:#cbd1da!important}
+.home-nav{background:linear-gradient(135deg,#292e36,#1b1f26)!important;border:1px solid #414854!important;color:#f0f2f5!important}
+.home-nav.active{background:linear-gradient(135deg,#3a414b,#272d36)!important;border-color:#68717e!important;color:#fff!important}
+.nav-group{background:linear-gradient(135deg,#171b21,#101318)!important;border-color:#303640!important}
+.nav-group[open]{background:linear-gradient(135deg,#20252d,#15191f)!important;border-color:#535d6b!important}
+.nav-group summary{color:#cbd1da!important}
+.nav-group summary:after{color:#b9c1cc!important}
+.nav-group .nav-links button.active{background:#303741!important;border-color:#596372!important;color:#fff!important}
+button{transition:transform .16s ease,filter .16s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease}
+button:active{transform:scale(.965);filter:brightness(1.18)}
+button.tap-pop{animation:tapPop .38s cubic-bezier(.2,.8,.2,1)}
+@keyframes tapPop{0%{transform:scale(1);box-shadow:0 0 0 0 #d7dde822}35%{transform:scale(.95);filter:brightness(1.24);box-shadow:0 0 0 4px #d7dde822}70%{transform:scale(1.015)}100%{transform:scale(1);filter:brightness(1);box-shadow:none}}
+
+
+.week-jump{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}.week-jump .row{gap:10px}.week-jump select{min-width:125px}.budget-inspect{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:14px 0}.skip-modal{max-width:760px!important;max-height:88vh;overflow:hidden;display:flex;flex-direction:column}.skip-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0 12px}.skip-progress{height:6px;border-radius:9px;background:var(--panel2);overflow:hidden;margin-bottom:12px}.skip-progress span{display:block;height:100%;background:var(--gold);transition:width .25s}.skip-feed{overflow:auto;min-height:120px;max-height:52vh;padding:2px 4px 8px}.skip-week-card{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 10px}.skip-week-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}.skip-week-head .small{margin-left:auto}.skip-score{display:block;font-size:15px;margin-bottom:5px}.skip-news{margin-top:5px;color:var(--muted)}.skip-enter{animation:skipDrop .42s cubic-bezier(.2,.8,.2,1) both}@keyframes skipDrop{from{opacity:0;transform:translateY(-22px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}.form-badge{display:inline-flex;align-items:center;justify-content:center;border-radius:8px;min-width:25px;padding:3px 7px;font-weight:800;background:#27364d}.form-badge.good{background:#174d3d;color:#8af0c4}.form-badge.draw{background:#514322;color:#f5d58a}.form-badge.bad{background:#512b35;color:#ff9eaa}
+
+</style>
+<style>
+.relegation-row td{background:rgba(190,65,65,.075)}
+.relegation-row td:first-child{box-shadow:inset 3px 0 0 rgba(210,82,82,.72)}
+.relegation-row td:nth-child(2){color:#e9b0b0}
+.relegation-row:hover td{background:rgba(190,65,65,.13)}
+
+.week-jump{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}.week-jump .row{gap:10px}.week-jump select{min-width:125px}.budget-inspect{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:14px 0}.skip-modal{max-width:760px!important;max-height:88vh;overflow:hidden;display:flex;flex-direction:column}.skip-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0 12px}.skip-progress{height:6px;border-radius:9px;background:var(--panel2);overflow:hidden;margin-bottom:12px}.skip-progress span{display:block;height:100%;background:var(--gold);transition:width .25s}.skip-feed{overflow:auto;min-height:120px;max-height:52vh;padding:2px 4px 8px}.skip-week-card{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 10px}.skip-week-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}.skip-week-head .small{margin-left:auto}.skip-score{display:block;font-size:15px;margin-bottom:5px}.skip-news{margin-top:5px;color:var(--muted)}.skip-enter{animation:skipDrop .42s cubic-bezier(.2,.8,.2,1) both}@keyframes skipDrop{from{opacity:0;transform:translateY(-22px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}.form-badge{display:inline-flex;align-items:center;justify-content:center;border-radius:8px;min-width:25px;padding:3px 7px;font-weight:800;background:#27364d}.form-badge.good{background:#174d3d;color:#8af0c4}.form-badge.draw{background:#514322;color:#f5d58a}.form-badge.bad{background:#512b35;color:#ff9eaa}
+
+</style>
+</head><body><div id="app"></div><div id="modal"></div><div id="toast"></div>
+<script>
+const clubs=[
+['Galatasaray',86,52,248],['Fenerbahçe',85,48,230],['Beşiktaş',81,32,165],['Trabzonspor',79,24,128],['Başakşehir',77,18,96],['Samsunspor',75,14,76],['Göztepe',73,11,62],['Kocaelispor',71,10,55],['Konyaspor',70,9,51],['Rizespor',70,9,49],['Gaziantep FK',69,8,47],['Alanyaspor',69,8,45],['Eyüpspor',68,7,43],['Kasımpaşa',68,7,42],['Gençlerbirliği',67,6,39],['Erzurumspor FK',66,5,35],['Amed Sportif',66,6,38],['Çorum FK',65,5,34]
+];
+
+const realRosters={
+"Alanyaspor":["Mahmut Can Kara", "Mert Furkan Bayram", "Paulo Victor", "Nuno Lima", "Bedirhan Özyurt", "Fidan Aliti", "Fatih Aksoy", "Bilal Demirağ", "Enes Keskin", "Ruan Pereira Duarte", "Emre Demir", "Şahin Dik", "Paolo Fernandes", "İzzet Çelik", "Arouna Soro", "Gaius Makouta", "Baran Ali Gezek", "Maestro", "Yusuf Özdemir", "Florent Hadergjonaj", "Ibrahim Kaya", "Omar Ben Ali", "Ianis Hagi", "Meschak Elia", "Hwang Ui-Jo", "Arda Usluoğlu", "Iván Cédric"],
+"Başakşehir":["Volkan Babacan", "Muhammed Şengezer", "Luca Stancic", "Ege Öztürk", "Deniz Dilmen", "Jerome Opoku", "Onur Bulut", "Hamza Güreler", "Christopher Operi", "Emin Bayram", "Ousseynou Ba", "Michał Karbownik", "Saba Kharebashvili", "Ömer Ali Şahiner", "Efe Arda Koyuncu", "Onur Ergün", "Yusuf Sarı", "Olivier Kemen", "Edin Višća", "Abbosbek Fayzullaev", "Jakub Kałuziński", "Berkay Özcan", "Umut Güneş", "Andreas Skov Olsen", "Davie Selke", "Eldor Shomurodov", "Umut Bozok", "Ivan Brnić", "Batuhan Çelik", "Bertuğ Yıldırım"],
+"Beşiktaş":["Alexander Nübel", "Doğan Alemdar", "Emir Yaşar", "Kassoum Ouattara", "Emmanuel Agbadou", "Taylan Bulut", "Rıdvan Yılmaz", "Tiago Djaló", "Ümit Akdağ", "Emirhan Topçu", "Yasin Özcan", "Amir Murillo", "Mustafa Yortaç", "Wilfred Ndidi", "Salih Özcan", "Milot Rashica", "Kartal Kayra Yılmaz", "Orkun Kökçü", "Junior Olaitan", "Václav Černý", "Fabio Miretti", "İlhan Fakılı", "Hyeon-gyu Oh", "Ernest Poku", "Leandro Trossard", "Mustafa Hekimoğlu", "Can Keleş", "Dušan Vlahović", "Ozan Sevim", "Ahmet Sami Bircan", "Semih Kılıçsoy"],
+"Çorum FK":["Marcos Felipe", "Erhan Erentürk", "Arif Şimşir", "Çağlar Söyüncü", "Alexandre Penetra", "Hrvoje Smolčić", "Gökhan Sazdağı", "Arda Şengül", "Huseyin Bulut", "Andrei Borza", "Serdar Saatçı", "Cemali Sertel", "Berat Özdemir", "Cengiz Ünder", "Atakan Akkaynak", "Markus Karlsbakk", "Mohammed Diomande", "Fredy", "Emircan Gürlük", "Ylber Ramadani", "Göktan Gürpüz", "Ermin Mahmić", "Ahmed Ildız", "Furkan Çetinkaya", "Alexandros Kyziridis", "Atakan Cangöz", "Hasan Ege Akdogan", "Mame Thiam", "Youssoufa Moukoko", "Jesús Ramírez"],
+"Erzurumspor FK":["Ertuğrul Taşkıran", "Erkan Anapa", "Matija Orbanić", "Şerefhan Sağlık", "Festy Ebosele", "Yakup Kırtay", "Amar Gerxhaliu", "Guram Giorbelidze", "Nihad Mujakić", "Mustafa Yumlu", "Cengizhan Bayrak", "Ömer Arda Kara", "Emre Erdem", "Taha Rençber", "Orhan Ovacıklı", "Yigit Baran Karaoglan", "Brandon Baiye", "Sefa Akgün", "Miguel Cardoso", "Emirhan Acar", "Elisha Owusu", "Martín Rodríguez", "Lawrence Agyekum", "Mustafa Fettahoglu", "Gyrano Kerk", "Eren Tozlu", "Ibrahim Diabaté", "Nariman Akhundzade"],
+"Eyüpspor":["Emre Bilgin", "Horațiu Moldovan", "Umut Keseci", "Arda Yavuz", "Seyfettin Anıl Yaşar", "Jawad El Yamiq", "Talha Ülvan", "Diabel Ndoye", "Simone Giordano", "Yiğit Demir", "Zak Jules", "Berhan Satli", "Ömer Ahmet Ceyhan", "David Costa", "Abdelhamid Sabiri", "Lenny Pintor", "Charles-Andre Raux Yao", "Hamza Akman", "Taşkın Ilter", "Mete Demir", "Chandrel Massanga", "Bilal Boutobba", "Yusuf Barası", "Abdou Sy", "Ahmed Abdullahi", "Musa Karakas", "Christ Sadia"],
+"Fenerbahçe":["Kuzey Sapaz", "Tarık Çetin", "Ederson", "Mert Günok", "Archie Brown", "Yiğit Efe Demir", "Nathan Aké", "Mert Müldür", "Kojo Peprah Oppong", "Levent Mercan", "Jayden Oosterwolde", "Nélson Semedo", "Milan Škriniar", "Ognjen Mimović", "İsmail Yüksek", "Mattéo Guendouzi", "Mert Hakan Yandaş", "Mason Greenwood", "İrfan Can Kahveci", "Marco Asensio", "Bartuğ Elmaz", "Oğuz Aydın", "N'Golo Kanté", "Kerem Aktürkoğlu", "Romelu Lukaku", "Çağrı Balta", "Emin Eren Sayar", "Alaettin Ekici", "Vedat Muriqi", "Dorgeles Nene", "Amara Diouf"],
+"Galatasaray":["Arda Yılmaz", "Uğurcan Çakır", "Günay Güvenç", "Jankat Yılmaz", "Enes Emre Büyük", "El Chadaille Bitshiabu", "Ismail Jakobs", "Davinson Sánchez", "Roland Sallai", "Eren Elmalı", "Kaan Ayhan", "Abdülkerim Bardakcı", "Kazımcan Karataş", "Wilfried Singo", "Arda Ünyay", "Eyüp Aydın", "Gabriel Sara", "Leroy Sané", "Yunus Akgün", "Lesley Ugochukwu", "İlkay Gündoğan", "Lucas Torreira", "Barış Alper Yılmaz", "Renato Nhaga", "Aleksey Batrakov", "Mario Lemina", "Can Armando Güner", "Ada Yüzgeç", "Deniz Gül", "Rafael Leão", "Victor Osimhen", "Berat Luş"],
+"Gaziantep FK":["Kacper Tobiasz", "Ataberk Dadakdeniz", "Cemilhan Aslan", "Ibrahim Kagan Alkis", "Luis Pérez", "Arda Kızıldağ", "Efe Sarıkaya", "Myenty Abena", "Abakar Sylla", "Kerim Çalhanoğlu", "Nazım Sangaré", "Sabahattin Destici", "Drissa Camara", "Ulrich Meleke", "Juninho Bacuna", "Gidado Victor Ntino-Emo", "Kacper Kozłowski", "Mirza Cihan", "Karamba Gassama", "Deian Sorescu", "Enver Kulašin", "Alexandru Maxim", "Ogün Özçiçek", "Mervan Müjdeci", "Burak Enes Yikici", "Trivante Stewart", "Serdar Dursun", "Sontje Hansen", "Halil Dervişoğlu", "Ali Osman Kalın", "Fuat Bavuk", "Kadir Gümüş"],
+"Gençlerbirliği":["Berk Deniz Çukurcu", "Gökhan Akkan", "Hasan Oğul", "İrfan Can Eğribayat", "Thalisson", "Yiğit Hamza Aydar", "Dimitris Goutas", "Pedro Pereira", "Arda Cagan Celik", "Berat Can Sebat", "Ensar Çavuşoğlu", "Abdurrahim Dursun", "Fıratcan Üzüm", "Metehan Baltacı", "Kévin Rodrigues", "Peter Etebo", "Franco Tongya", "Adama Malouda Traoré", "Cheikh Niasse", "Oğulcan Ülgün", "Ousmane Diabate", "Salih Uçan", "Göktug Erdem", "Rafael Luis", "Tiago Gouveia", "Pedro Mendes", "Victor Orakpo", "Ayaz Özcan", "Erk Arda Aslan", "Sekou Koita", "Prince Martor"],
+"Göztepe":["Arda Özçimen", "Luka Gugeshashvili", "Mehmet Şamil Öztürk", "Nevzat Üzel", "Allan", "Taha Altıkardeş", "Richard Akonnor", "Ege Yildirim", "Noah Sonko Sundberg", "Furkan Bayır", "Malcom Bokele", "Arda Kurtulan", "Rhaldney", "Alex Matos", "Ogün Bayrak", "Tino Anjorin", "Novatus Miroshi", "André Henrique", "Ibrahim Sabra", "Alexis Antunes", "Juan Santos da Silva", "Efkan Bekiroğlu", "Bekir Turaç Böke", "Gökdeniz Bayrakdar", "Sinclair Armstrong", "Janderson"],
+"Kasımpaşa":["Andreas Gianniotis", "Ali Emre Yanar", "Ege Albayrak", "Cláudio Winck", "Adem Arous", "Jakob Jessen", "Kevin Mouanga", "Ömer Bayram", "Godfried Frimpong", "Kamil Ahmet Çörekçi", "Salih Arici", "Matei Ilie", "Ahmet Taha Dağbaşı", "Ayberk Karapo", "Atakan Mujde", "Haris Hajradinović", "Thiemoko Diarra", "Mortadha Ben Ouanes", "Andri Fannar Baldursson", "Jesurun Rak-Sakyi", "Marcus Rafferty", "Kerem Demirbay", "Fousseni Diabaté", "Elson Mendes", "Emirhan Boz", "Ali Yavuz Kol", "Adrian Benedyczak", "Sinan Alkas", "Mecit Deniz", "Emirhan Yiğit", "Güven Yalçın", "Muhammed Bektaş", "Stann Élysée Dalo"],
+"Kocaelispor":["Aleksandar Jovanović", "Onurcan Piri", "Serhat Öztaşdelen", "Talha Polat", "Anfernee Jamal Dijksteel", "Muharrem Cinan", "Tanguy Zoukrou", "Emir Ortakaya", "Matej Maglica", "Massadio Haïdara", "Uğur Kaan Yıldız", "Onur Öztonga", "Tobias Fjeld Gulliksen", "Berkan Kutlu", "Show", "Hulisi Destici", "Mahamadou Susoho", "Metehan Altunbaş", "Ege Bilim", "Makana Baku", "Tayfur Bingöl", "Rigoberto Rivas", "Dan Agyei", "Bruno Petković", "Gonçalo Sousa", "Arda Ozyar", "Haydar Karataş", "Fati̇hhan Demi̇r", "Bedirhan Yıldız", "Florian Ayé"],
+"Konyaspor":["Deniz Ertaş", "Bahadır Han Güngördü", "Egemen Aydin", "Emir Gündoğdu", "Ahmet Oğuz", "Arif Boşluk", "Adil Demirbağ", "Uğurcan Yazğılı", "Chidozie Awaziem", "Ata Yanık", "Yhoan Andzouana", "Rayyan Baniya", "Arthur Masuaku", "Da Mata", "Diogo Gonçalves", "Marko Jevtović", "Deniz Türüç", "Enis Bardhi", "Mücahit Ibrahimoglu", "Omer Cobanoglu", "Emir Bars", "Rajmund Tóth", "Melih İbrahimoğlu", "Jackson Muleka", "Ebrima Colley", "Mostafa Mohamed", "Jean-Luc Dompé", "Enis Destan"],
+"Rizespor":["Zafer Görgen", "Yahia Fofana", "Efe Doğan", "Hasan Yağız Döne", "Husniddin Aliqulov", "Attila Mocsi", "Tayyip Talha Sanuç", "Zakaria Ariss", "Umut Erdem", "Siaka Bakayoko", "Taha Şahin", "Mithat Pala", "Modibo Sagnan", "Yakup Ayan", "Moussa Diakité", "Valentin Mihăilă", "Dal Varešanović", "Ibrahim Olawoyin", "Taylan Antalyalı", "Qazim Laci", "Ahmed Kutucu", "Emirhan Yilmaz", "Can Bozdoğan", "Ali Sowe", "Adedire Mebude", "Gennaro Borrelli", "Iustin Doicaru", "Mustafa Coşkun Tosun", "Emrecan Bulut"],
+"Samsunspor":["Okan Kocuk", "Efe Yiğit Üstün", "Bilal Bayazit", "Efe Berat Törüz", "Josafat Mendes", "Igor Drapiński", "Strahinja Eraković", "Logi Tomasson", "Yunus Emre Çift", "Enes Albak", "Haluk Mustafa Tan", "Gabriele Guarino", "Bedirhan Çetin", "Kerem Fidan", "Elliot Watt", "Celil Yüksel", "Samed Onur", "Tanguy Coulibaly", "Emre Kılınç", "Jaures Assoumou", "Oskar Øhlenschlaeger", "Yalçın Kayan", "Antoine Sekongo", "Afonso Sousa", "Elayis Tavsan", "Fatih Kaya", "Mohamed Bayo", "Saikuba Jarju"],
+"Trabzonspor":["Ahmet Doğan Yıldırım", "André Onana", "Onuralp Çevikkan", "Erol Can Çolak", "Samet Akaydın", "Stefan Savić", "Mustafa Eskihellaç", "Wagner Pina", "Chibuike Nwaiwu", "Cenk Özkaçar", "Arseniy Batagov", "Sidny Lopes Cabral", "Mustafa Kuzey Akcay", "Batista Mendy", "Okay Yokuşlu", "Fabinho", "Ernest Muçi", "Benjamin Bouchouari", "Mohamed Salah", "Ozan Tufan", "Ruslan Malinovskyi", "Tim Jabol-Folcarelli", "Melih Kabasakal", "Noah Saviolo", "Metehan Mimaroğlu", "Oğuzhan Ertem", "Franculino Djú", "Umut Nayir", "Paul Onuachu", "Aral Şimşir", "Cihan Çanak", "Hakan Yılmaz", "Ali Habeşoğlu"],
+"Amed Sportif":["Yakup Girişen", "Burak Bozan", "Alban Lafont", "Veysel Sapan", "Miraç Acer", "David Robert Bates", "Lumbardh Dellova", "Umut Meraş", "Mehmet Yeşil", "Amadou Cissé", "Kahraman Demirtaş", "Berat Perçin", "Ali Turap Bülbül", "Cem Üstündag", "Ermal Krasniqi", "Furkan Soyalp", "Yira Collins Sor", "Gökhan Gül", "Rayan Raveloson", "Dia Saba", "Rayan Lutin", "Hüseyin Ülgüt", "Samuel Ballet", "Muhammed Yıldırım", "Dilhan Demir", "Mbaye Diagne", "Mohamed Khalil", "Berk Kızıldemir", "Gift Orban"],
+};
+
+
+// Transfer merkezinde yalnızca gerçek futbolcular kullanılır. Mevki, yaş ve değerler oyun için yaklaşıklaştırılmıştır.
+const realMarketData = [
+['Thibaut Courtois',34,'KL',90,90,'Real Madrid',35,180000],['Alisson Becker',33,'KL',89,89,'Liverpool',28,170000],['Gianluigi Donnarumma',27,'KL',89,92,'Manchester City',45,190000],['Mike Maignan',31,'KL',87,87,'AC Milan',25,130000],['Ederson',33,'KL',86,86,'Fenerbahçe',18,150000],
+['Virgil van Dijk',35,'STP',89,89,'Liverpool',18,220000],['William Saliba',25,'STP',89,94,'Arsenal',80,160000],['Rúben Dias',29,'STP',88,88,'Manchester City',55,200000],['Antonio Rüdiger',33,'STP',87,87,'Real Madrid',15,190000],['Ronald Araújo',27,'STP',86,90,'Barcelona',50,160000],['Alessandro Bastoni',27,'STP',87,91,'Inter',65,150000],['Éder Militão',28,'STP',86,89,'Real Madrid',45,160000],['Joško Gvardiol',24,'STP',88,93,'Manchester City',75,170000],
+['Theo Hernández',29,'SLB',87,88,'AC Milan',45,140000],['Alphonso Davies',25,'SLB',86,91,'Bayern Münih',55,160000],['Nuno Mendes',24,'SLB',87,92,'Paris Saint-Germain',65,140000],['Federico Dimarco',28,'SLB',86,87,'Inter',40,120000],['Achraf Hakimi',27,'SGB',89,91,'Paris Saint-Germain',70,180000],['Trent Alexander-Arnold',28,'SGB',87,89,'Real Madrid',55,190000],['Jules Koundé',27,'SGB',86,89,'Barcelona',50,150000],['Reece James',26,'SGB',85,89,'Chelsea',40,150000],
+['Rodri',30,'MO',91,91,'Manchester City',75,220000],['Jude Bellingham',23,'MO',91,95,'Real Madrid',150,250000],['Pedri',23,'MO',89,94,'Barcelona',110,180000],['Federico Valverde',28,'MO',89,91,'Real Madrid',100,200000],['Declan Rice',27,'MO',89,91,'Arsenal',110,200000],['Vitinha',26,'MO',88,91,'Paris Saint-Germain',75,150000],['Alexis Mac Allister',27,'MO',87,89,'Liverpool',65,150000],['Bruno Fernandes',32,'MO',88,88,'Manchester United',45,200000],['Martin Ødegaard',27,'MO',88,91,'Arsenal',85,180000],['Hakan Çalhanoğlu',32,'MO',87,87,'Inter',25,140000],['Kevin De Bruyne',35,'MO',87,87,'Napoli',12,180000],['Florian Wirtz',23,'MO',89,94,'Liverpool',120,200000],['Jamal Musiala',23,'MO',90,95,'Bayern Münih',130,220000],
+['Mohamed Salah',34,'SĞK',89,89,'Liverpool',25,300000],['Bukayo Saka',25,'SĞK',89,93,'Arsenal',120,220000],['Lamine Yamal',19,'SĞK',90,97,'Barcelona',160,180000],['Raphinha',29,'SĞK',88,88,'Barcelona',65,180000],['Ousmane Dembélé',29,'SĞK',88,89,'Paris Saint-Germain',70,200000],['Lionel Messi',39,'SĞK',86,86,'Inter Miami',8,100000],['Vinícius Júnior',26,'SLK',91,94,'Real Madrid',150,280000],['Kylian Mbappé',27,'SLK',92,96,'Real Madrid',180,350000],['Khvicha Kvaratskhelia',25,'SLK',88,92,'Paris Saint-Germain',90,180000],['Son Heung-min',34,'SLK',86,86,'LAFC',12,150000],['Rafael Leão',27,'SLK',87,91,'AC Milan',75,180000],
+['Erling Haaland',26,'SNT',92,96,'Manchester City',180,350000],['Harry Kane',33,'SNT',90,90,'Bayern Münih',55,300000],['Victor Osimhen',27,'SNT',89,92,'Galatasaray',75,220000],['Lautaro Martínez',29,'SNT',89,91,'Inter',95,220000],['Alexander Isak',26,'SNT',88,92,'Liverpool',90,200000],['Robert Lewandowski',38,'SNT',86,86,'Barcelona',10,220000],['Julián Álvarez',26,'SNT',88,92,'Atlético Madrid',90,180000],['Dušan Vlahović',26,'SNT',86,90,'Juventus',55,180000],['Lautaro Martínez',29,'SNT',89,91,'Inter',95,220000],['Ollie Watkins',30,'SNT',86,87,'Aston Villa',40,140000],['Viktor Gyökeres',28,'SNT',88,91,'Arsenal',75,180000]
+];
+function buildRealMarket(){return realMarketData.filter((x,i,a)=>a.findIndex(y=>y[0]===x[0])===i).map((x,i)=>({id:'real-'+i+'-'+Math.random().toString(36).slice(2,7),name:x[0],age:x[1],pos:x[2],rating:x[3],potential:x[4],club:x[5],value:x[6],wage:x[7],years:2,form:7,apps:0,goals:0,assists:0,injury:0}));}
+
+const first=['Mert','Emir','Arda','Kerem','Can','Efe','Yusuf','Ali','Deniz','Burak','Umut','Oğuz','Kaan','Berk','Eren','Barış','Ahmet','Mehmet','Cem','Onur','Tolga','Serkan'];
+const last=['Yılmaz','Demir','Kaya','Şahin','Çelik','Aydın','Öztürk','Koç','Arslan','Doğan','Kurt','Polat','Aksoy','Kılıç','Aslan','Güneş','Yalçın'];
+
+const lowerLeagueTeams=[
+'Alagöz Holding Iğdır FK','Antalyaspor','Bandırmaspor','Batman Petrolspor','Bodrum FK',
+'Boluspor','Bursaspor','Sivasspor','Ümraniyespor','İstanbulspor',
+'Ankara Keçiörengücü','Manisa FK','Mardin 1969 Spor','Kayserispor',
+'Fatih Karagümrük','Muğlaspor','Pendikspor','Sarıyer','Esenler Erokspor','Van Spor FK'
+];
+const lowerRosters={
+'Antalyaspor':['Abdullah Yiğiter','Ahmet Sağat','Alexander van de Streek','Arda Altun','Arif Kocaman','Bünyamin Balcı','Doğukan Sinik','Ensar Buğra Tivsi','Erdoğan Yeşilyurt','Fotios Pseftis','Francis Nzaba','Güray Vural','Hasan Ürkmez','Hasan Yakub İlçin','Ismail Chehaima','Jesper Ceesay','Kağan Arıcan','Mert Yılmaz','Mevlüt Şimşek','Nuno da Costa','Ömer Faruk Beyaz','Pedro Moreira','Ramzi Safuri','Samet Karakoç','Samet Yalçın','Soner Dikmen','Ufuk Akyol','Veysel Sarı'],
+'Van Spor FK':['Abdulsamed Damlu','Alvaro de Oliveira Felicissimo','Anıl Mehmet Sıddık Yıldırım','Batuhan İşçiler','Celal Hanalp','Emre Aytun','Faruk Can Genç','Güvenç Usta','Hikmet Çiftçi','Ilias Alhaft','İlkan Sever','Jurgen Bardhi','Kadir Seven','Medeni Bingöl','Mehmet Can Davarcıoğlu','Mehmet Manış','Mehmet Özcan','Molik Jesse Khan','Muhammed Alperen Uysal','Muhammed Furkan Özhan','Muhammet Elyesa Çakmak','Naby Youssouf Oulare','Ozan Can Kökçü','Özkan Yiğiter','Richairo Zivkovic','Sinan Osmanoğlu','Tenton Yenne'],
+'Esenler Erokspor':['Altin Zeqiri','Bahadır Öztürk','Braian Samudio','Burak Çoban','Enes Alıç','Erdem Canpolat','Erkan Kaş','Ferhat Yazgan','Furkan Orak','Guelor Kanga','Hayrullah Bilazer','Kubilay Kanatsızkuş','Luccas Claro','Mame Mor Faye','Mikail Okyar','Muhamed Buljubasic','Muhammet Doğukan Demir','Nicolas Janvier','Oğulcan Kestane','Onur Ulaş','Osman Ertuğrul Çetin','Pape Habib Gueye','Recep Niyaz','Talha Tekin','Tugay Kacar','Yusuf Arda Özyurt','Yusuf Erdoğan'],
+'Alagöz Holding Iğdır FK':['Abdul Malik Yılmaz','Felix Ohena Afena-Gyan','Alim Öztürk','Alperen Selvi','Arda Çolak','Arda Öztürk','Baran Moğultay','Devran Şenyurt','Dino Hotić','Doğan Erdoğan','Douglas Willian da Silva Souza','Efe Kaan Şıhlaroğlu','Eren Karataş','Fahri Pınar','Giovanni Crociata','Gökcan Kaya','Hüseyin Karabey','Jakub Szumski','Leandro Bacuna','Leon Çalışkan','Loic Kouagba','Moustapha Camara','Muhammet Taha Tepe','Serdar Gürler','Serkan Asan','Serkan Emrecan Terzi','Soner Gönül','Yiğit Ali Buz'],
+'Bandırmaspor':['Ahmet Biler','Akın Alkan','Ali Ülgen','Amidou Badji','Bartu Kulbilge','Burak Bekaroğlu','Cedric Hountondji','Cem Tuna Türkmen','Cumali Gürsel','Dame Bamba Seck','Dean Liço','Emirhan Ayhan','Enes Aydın','Enes Çinemre','Furkan Bekleviç','Gani Burgaz','Gianni Bruno','Hakan Bilgiç','Kerem Dönertaş','Lucas Pedro Alves de Lima','Mehmet Eray Özbek','Muhammed Gümüşkaya','Muhammet Harun Genç','Oluwatosin Kehinde','Recep Yalın Dilek','Remi Mulumba','Yasin Arda Midiliç','Yusuf Kocatürk'],
+'Batman Petrolspor':['Ali İmran Işık','Bernardo Martins','Çağlar Şahin Akbaba','David Kaiki Flores da Silva','Devran Bozardıç','Emirhan Akgün','Emirhan Aydoğan','Gökhan Karadeniz','Jinho Jo','Karahan Yasir Subaşı','Karan Topdemir','Mamadou Cissokho','Matheus Doria Macedo','Metehan Mert','Mickael Biron','Mücahit Albayrak','Muhammed Birkan Tetik','Murat Sipahioğlu','Oğuz Gürbulak','Omar İmeri','Ömürcan Artan','Pedro Henrique','Polat Yaldır','Rahman Buğra Çağıran','Sami Gökhan Altıparmak','Sergio Duvan Cordova','Turgut Arda Görmüş','Yusuf Bakır'],
+'Bodrum FK':['Adem Metin Türk','Ahmet Aslan','Ali Aytemur','Ali Şahin Yılmaz','Arlind Ajeti','Bahri Can Tosun','Berkay Aslan','Berşan Yavuzay','Celal Dumanlı','Devrim Şahin','Diogo Sousa','Ege Bilsel','Elvir Gashijan','Emre Kaplan','Enes Koç','Fernando Andrade','Florian Loshaj','Furkan Apaydın','İsmail Tarım','Joao Tomas','Kenan Fakılı','Mustafa Erdilman','Ruben Providence','Rüzgar Mehmet Adıyaman','Vincent Aboubakar','Yusuf Sertkaya'],
+'Boluspor':['Abdulsamet Kırım','Ahmet Can Özdemir','Ali Çırak','Ali Uğurhan Uğurlu','Angelo Tafas','Bartu Göçmen','Bertu Alican Özyürek','Burak Topçu','Canberk Ömer Özdemir','Ege Özkayimoğlu','Elvin Yunuszade','Erdem Can Polat','Fernando Escobar Rodriguez','Furkan Metin','Jose Martin Diaz Lopez','Juan Cruz Arguello','Kevin Andres Cuesta','Muhammed Mert','Muhammet Özkan','Mustafa Alptekın Çaylı','Nurettin Korkmaz','Orkun Özdemir','Rodrigo Rivas','Temel Çakmak','Tolunay Artuç','Yusuf Can Esendemir'],
+'Bursaspor':['Adem Geldi','Ahmet Çobanoğlu','Ahmet Hakan Atış','Ahmet Said Kıvanç','Alperen Babacan','Amine Boutrah','Anıl Atağ','Baran Başyigit','Barış Gök','Emir Kaan Gültekin','Emirhan Başyigit','Eray Duman','Ertuğrul Ersoy','Eyüp Akcan','Halil Akbunar','Hüseyin Maldar','Ivan Saranic','Juergen Elitim','Kelechi Iheanacho','Kerem Matışlı','Lewis Baker','Lincoln Henrique','Rahmetullah Berişbek','Soner Aydoğdu','Taha Batuhan Yayıkcı','Tayfun Aydoğan','Toral Bayramov','Zeki Yavru'],
+'Sivasspor':['Aaron Appindangoye','Ali Şaşal Vural','Amilton','Arda Erdursun','Burak Kapacak','Charilaos Charisis','Clinton Duodu','Ebrima Ceesay','Emre Gökay','Kamil Fidan','Kerem Atakan Kesgin','Mehmet Albayrak','Mehmet Feyzi Yıldırım','Mehmet Göktuğ Bakırbaş','Mert Çelik','Murat Paluli','Musah Mohammed','Oğuzhan Aksoy','Okan Erdoğan','Rei Manaj','Salih Kavrazlı','Süleyman Özdamar','Turan Tuzlacık','Uğur Çiftçi','Valon Ethemi','Yılmaz Cin','Yusuf Cihat Çelik','Yusuf Çağlar Kefkir'],
+'Ümraniyespor':['Abdulkadir Parmak','Alejandro Blanco','Ali Yaşar','Andrej Dokanovic','Atalay Babacan','Bangaly Fode Koita','Batuhan Çakır','Berat Yılmaz','Burak Öksüz','Cebio Soukou','Cihan Topaloğlu','David Otugo','Kerem Şen','Kerem Yusuf Ersunar','Melih Bostan','Muhammet Tunahan Taşcı','Mustafa Arda Kartal','Mustafa Eser','Oğuz Yıldırım','Oğuzhan Aydoğan','Özgün Ali Köklü','Santeri Hostikka','Serkan Göksu','Talha Bartu Özdemir','Toheeb Kosoko','Tomislav Glumac','Yunus Emre Gedik'],
+'İstanbulspor':['Abdullah Dijlan Aydın','Alieu Cham','Ali Akman','Alp Tutar','Aytaç Kara','Batuhan Yavuz','Berk Ali Nizam','Duran Şahin','Elvin Mendy','Emrecan Uzunhan','Enver Azmi Sarıalioğlu','Erdem Seçgin','Essap Njie','Ilian Iliev','İsa Dayaklı','İsa Doğan','Kubilay Sönmez','Mamadou Fall','Mario Krstovski','Michael Ologo','Muhlis Dağaşan','Mustafa Sol','Mücahit Serbest','Özcan Şahan','Phellipe Cardoso','Ünal Emre Durmuşhan','Vefa Temel','Yusuf Ali Özer'],
+'Ankara Keçiörengücü':['Abdullah Çelik','Alcidio Raice','Berkan Mahmut Keskin','Efe Kaan Yıldız','Emre Satılmış','Enes Yılmaz','Erkam Develi','Halil Can Ayan','Herculano Nabian','İbrahim Akdağ','İshak Karaoğul','Jefferson Nogueira','Mame Biram Diouf','Mehmet Erdoğan','Mehmet Selim Demirci','Moryke Fofana','Muhammed Taha Tahiroğlu','Odise Roshi','Oğuzcan Çalışkan','Oğuzhan Ayaydın','Francis Ezeh','Ömer Faruk Demirel','Recep Berat Taşbakır','Süleyman Luş','Tuncer Duhan Aksu','Wellington Nascimento','Yunus Bahadır','Yunus Emre Metin'],
+'Manisa FK':['Ada İbik','Ahmet Şen','Atakan Rıdvan Çankaya','Birama Toure','Bican Tibukoğlu','Cheickne Sylla','Christophe Herelle','Emre Akboğa','Fırat İnal','Jonathan Lindseth','Julien Anziani','Kadir Kaan Yurdakul','Kerem Arık','Metehan Başar','Oğuzhan Yurtdaş','Osman Kahraman','Osman Kaynak','Pascal Lemina','Sami Yusuf Tuncer','Vedat Karakuş','Waldir Alenis Vargas','Yasin Güreler','Yassine Benrahou','Yunus Emre Dursun','Yunus Emre Köse','Yunus Emre Yüce','Yusuf Talum','Yüksel Egemen Yaylı'],
+'Mardin 1969 Spor':['Adem Eren Kabak','Ahmet Ülük','Baba Alhassan','Berkay Doğan','Bünyamin Balat','Dorde Denic','Emir Kireççi','Emre Taşdemir','Enes Erol','Eray Korkmaz','Erce Kardeşler','Erol Can Akdağ','Kerim Alıcı','Mallik Coley Wilks','Metin Zanyar Başaran','Muammer Denizhan Taşkan','Mustafa Şengül','Nafican Yardımcı','Olarenwaju Kayode','Osman Yıldırım','Ömer Kahveci','Ömer Karslıoğlu','Şahverdi Çetin','Tonio Teklic','Uğur Adem Gezer','Zdravko Dimitrov'],
+'Kayserispor':['Abdulsamet Burak','Aras Çelik','Benhur Keser','Cenk Şen','Daniel Moreno','Denis Radu','Deniz Eren Dönmezer','Ensar Kemaloğlu','Fethi Özer','Florent Hasani','Gökhan Değirmenci','Görkem Sağlam','Hasan Kaan Yalçı','Jemal Tabidze','Joshua Brenet','Kayra Cihan','Malik Kadir Hayvalı','Mamadi Camara','Marco Dulca','Mehmet Murat Uçar','Mert Göçkan','Muhammed Eren Arıkan','Murat Cem Akpınar','Oğulcan Çağlayan','Semih Güler','Sinan Kurt','Talha Sarıarslan','Taulan Sulejmanov'],
+'Fatih Karagümrük':['Ahmed Traore','Aleksandar Pesic','Anıl Yiğit Çınar','Atınç Nukan','Barış Jakob Kalaycı','Batuhan Ahmet Şen','Berke Can Evli','Burhan Ersoy','Candan Başkale','Cenk Tosun','Çağtay Kurukalip','Daniele Verde','Davide Biraschi','Dorukhan Toköz','Emmanouil Siopis','Emre Akbaba','Halis Joshua Esen','Kerem Özmen','Marco Silvestri','Maruis Tresor Doh','Muhammed Emin Sarıkaya','Muhammed İyyad Kadıoğlu','Oğuzhan Odabaş','Ramazan Civelek','Robin Yalçın','Tarık Buğra Kalpaklı','Tiago Çukur','Yaya Onogo'],
+'Muğlaspor':['Ahmet Emin Engin','Ali Barak','Ali Kaan Güneren','Alihan Kazmaz','Arel Ekinci','Baran Ekiz','Batıhan Gebecelioğlu','Bilal Ceylan','Buluthan Bulut','Daniel Avramovski','Driton Camaj','Ekrem Kılıçarslan','Engin Poyraz Efe Yıldırım','Ertuğrul İdris Furat','Ibrahim Sissoko','Jurgen Çelhaka','Luis Del Pino Mago','Mamady Diarra','Oğuzhan Matur','Oluwakorede Osundina','Orhan Nahirci','Ozan Sol','Salem Bouajila','Selim Dilli','Yasin Uzunoğlu','Yiğit Fidan'],
+'Pendikspor':['Adnan Uğur','Ahmet Özkaya','Baran Demiroğlu','Bekir Karadeniz','Berkay Sülüngöz','Burak Gültekin','Damir Hrelja','Emir Dadük','Emrah Başsan','Emre Koyuncu','Erdem Gökçe','Favour Fomujang','Furkan Mehmet Doğan','Hakan Yeşil','Ismaila Manga','Jonson Clarke-Harris','Kerem Kalafat','Mesut Özdemir','Mirko Susak','Muhammed Enes Kiprit','Onuralp Çakıroğlu','Rogerio Rosario','Safa Yıldırım','Samuel Abifade','Taha Emre İnce','Utku Yuvakuran','Vinko Soldo','Yekta Sönmez'],
+'Sarıyer':['Ahmet Hasan Göçen','Andre Biyogo Poko','Barış Alıcı','Batuhan Kör','Berke Şanlıtürk','Caner Osmanpaşa','Cebrail Karayel','Doğan Can Davas','Efecan Karaca','Emeka Friday Eze','Emirhan Özkan','Erdi Dikmen','Eren Karadağ','Eşref Korkmazoğlu','Furkan Gedik','Furkan Onur Akyüz','Hasan Berat Kayalı','Hasan Emre Yeşilyurt','Işık Kaan Arslan','İbrahim Sehic','Joseph Attamah','Mahmut Celal Yücel','Mamadou Thiam','Marcos Rodrigues','Stann Dalo','Tunahan Ergül','Üzeyir Ergün','Yağız Fikri Şen']
+};
+Object.assign(realRosters,lowerRosters);
+const lowerRatings={'Antalyaspor':67,'Alagöz Holding Iğdır FK':66,'Bandırmaspor':65,'Batman Petrolspor':64,'Bodrum FK':67,'Boluspor':62,'Bursaspor':64,'Sivasspor':68,'Ümraniyespor':63,'İstanbulspor':64,'Ankara Keçiörengücü':62,'Manisa FK':64,'Mardin 1969 Spor':61,'Kayserispor':67,'Fatih Karagümrük':67,'Muğlaspor':60,'Pendikspor':65,'Sarıyer':60,'Esenler Erokspor':68,'Van Spor FK':62};
+
+const positions=['KL','STP','STP','SLB','SGB','MO','MO','MO','SĞK','SLK','SNT'];
+const names={KL:'Kaleci',STP:'Stoper',SLB:'Sol Bek',SGB:'Sağ Bek',MO:'Merkez Orta Saha',SĞK:'Sağ Kanat',SLK:'Sol Kanat',SNT:'Santrafor'};
+// Gerçek kadrolar listedeki sıraya göre kaleci-savunma-orta saha-hücum gruplarına ayrılır.
+// Profil: [kaleci sayısı, savunma bitiş indeksi, orta saha bitiş indeksi].
+const positionProfiles={
+'Alanyaspor':[3,10,19],'Başakşehir':[5,13,22],'Beşiktaş':[3,13,22],'Çorum FK':[2,12,22],
+'Erzurumspor FK':[3,11,20],'Eyüpspor':[2,12,21],'Fenerbahçe':[4,14,23],'Galatasaray':[4,14,26],
+'Gaziantep FK':[2,12,23],'Gençlerbirliği':[4,14,24],'Göztepe':[4,12,20],'Kasımpaşa':[3,13,23],
+'Kocaelispor':[4,14,21],'Konyaspor':[3,13,22],'Rizespor':[3,13,22],'Samsunspor':[3,13,22],
+'Trabzonspor':[4,14,24],'Amed Sportif':[4,14,23]
+};
+function positionFor(team,idx){
+ const roster=realRosters[team]||[];
+ if(idx>=roster.length){return positions[idx%positions.length]}
+ const profile=positionProfiles[team]||[3,11,20];
+ const [gk,defEnd,midEnd]=profile;
+ if(idx<gk)return 'KL';
+ if(idx<defEnd){const n=idx-gk;return ['STP','STP','SLB','SGB','STP','SLB','SGB','STP'][n%8]}
+ if(idx<midEnd){const n=idx-defEnd;return ['MO','MO','MO','MO','SĞK','SLK','MO','MO','SĞK','SLK'][n%10]}
+ const n=idx-midEnd;return ['SNT','SĞK','SLK','SNT','SNT','SĞK'][n%6];
+}
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a, pick=a=>a[rand(0,a.length-1)], money=n=>'€'+(n<1?Math.round(n*1000)+'B':n.toFixed(1)+'M');
+let game=null, page='home', selected=null, marketFilter='Tümü', marketSearch='';
+function makePlayer(team,idx,base){let pos=positionFor(team,idx),rating=Math.max(49,Math.min(91,base+rand(-8,5))),roster=realRosters[team]||[],name=roster[idx]||`${pick(first)} ${pick(last)}`;return {id:Math.random().toString(36).slice(2),name,age:rand(18,34),pos,rating,potential:Math.min(94,rating+rand(0,16)),value:+(Math.max(.15,(rating-45)**2/95*(1+(25-rand(18,34))/40))).toFixed(1),wage:rand(4,35)*1000,years:rand(1,4),form:rand(5,9),apps:0,goals:0,assists:0,injury:0,club:team};}
+function initTeam(name){let c=clubs.find(x=>x[0]===name),players=Array.from({length:Math.max(22,(realRosters[name]||[]).length)},(_,i)=>makePlayer(name,i,c[1]));return {name,rating:c[1],budget:c[2],wageBudget:1.2,players,points:0,played:0,w:0,d:0,l:0,gf:0,ga:0};}
+function fresh(name,manager){let teams=clubs.map(c=>initTeam(c[0]));let league=teams.map(t=>({...t,players:undefined}));let user=teams.find(t=>t.name===name);let fixtures=[];let arr=clubs.map(c=>c[0]);for(let r=0;r<17;r++){for(let i=0;i<9;i++){let a=arr[i],b=arr[17-i];fixtures.push({round:r+1,home:r%2?b:a,away:r%2?a:b,played:false});}arr.splice(1,0,arr.pop());}const firstLeg=[...fixtures];firstLeg.forEach(f=>fixtures.push({round:f.round+17,home:f.away,away:f.home,played:false}));let allPlayers=[];teams.forEach(t=>t.players.forEach(p=>allPlayers.push(p)));return {manager,season:2026,week:1,teams,league,fixtures,user:name,market:buildRealMarket(),history:[],sponsors:[],sponsorOffers:[],offers:[],tactics:{formation:'4-2-3-1',style:'Dengeli'},budget:teams.find(t=>t.name===name).budget,wageBudget:1.2,weeklyWage:0,rep:50,trust:65,fan:70,news:['Yeni sezon başlıyor. Yönetim başarı bekliyor.']};}
+function save(){try{if(game){game.positionSchema=2;localStorage.setItem('legendary_coach_save_v4',JSON.stringify(game));}}catch(e){console.warn('Kayıt yapılamadı:',e);}}
+function load(){try{localStorage.removeItem('legendary_coach_save_v2');localStorage.removeItem('legendary_coach_save_v3');let s=localStorage.getItem('legendary_coach_save_v4');if(!s)return false;let d=JSON.parse(s);if(!d||!Array.isArray(d.teams)||!Array.isArray(d.fixtures)||!d.user||!d.teams.some(t=>t&&t.name===d.user&&Array.isArray(t.players))){localStorage.removeItem('legendary_coach_save_v4');return false;}if(!Array.isArray(d.news))d.news=[];if(!Array.isArray(d.market)||!d.market.length)d.market=buildRealMarket();if(!Array.isArray(d.sponsors))d.sponsors=[];if(!Array.isArray(d.sponsorOffers))d.sponsorOffers=[];if(!Array.isArray(d.history))d.history=[];if(!Array.isArray(d.offers))d.offers=[];if(!d.tactics)d.tactics={formation:'4-2-3-1',style:'Dengeli'};d.tactics.formation=d.tactics.formation||'4-2-3-1';d.tactics.style=d.tactics.style||'Dengeli';(d.teams||[]).forEach(t=>(t.players||[]).forEach(p=>{p.injury=Math.max(0,Number(p.injury)||0);p.form=Number.isFinite(Number(p.form))?Number(p.form):7;p.years=Number.isFinite(Number(p.years))?Number(p.years):1;p.listed=!!p.listed;p.loanWeeks=Math.max(0,Number(p.loanWeeks)||0);if(p.loanWeeks===0&&p.loaned){p.loaned=false;delete p.loanWeeks;}}));
+// Eski kayıtları da yeni mevki kurallarıyla güncelle; böylece önceki hatalı mevkiler kalmaz.
+(d.teams||[]).forEach(team=>{if(Array.isArray(team.players)){const roster=realRosters[team.name]||[];team.players.forEach((p,i)=>{const originalIndex=roster.indexOf(p.name);if(originalIndex>=0)p.pos=positionFor(team.name,originalIndex);else if(!names[p.pos])p.pos=positions[i%positions.length]})}});
+if(Array.isArray(d.market))d.market.forEach((p,i)=>{if(!names[p.pos])p.pos=positions[i%positions.length]});
+if(d.tactics&&Array.isArray(d.tactics.lineup))d.tactics.lineup=d.tactics.lineup.filter(id=>(d.teams||[]).some(t=>(t.players||[]).some(p=>p.id===id)));
+game=d;game.sponsorOffers=(game.sponsorOffers||[]).filter(o=>!o.expiresWeek||o.expiresWeek>=game.week);if(!game.sponsorOffers.length)refreshSponsorOffers();return true;}catch(e){game=null;return false}}
+function toast(s){let el=document.getElementById('toast');el.textContent=s;el.className='toast';setTimeout(()=>el.className='',2400)}
+function fmt(n){return new Intl.NumberFormat('tr-TR').format(n)}
+function clubObj(n){return game.teams.find(t=>t.name===n)}
+function allFixtures(){return game.fixtures}
+function table(){return [...game.teams].sort((a,b)=>b.points-a.points||(b.gf-b.ga)-(a.gf-a.ga)||b.gf-a.gf)}
+
+function poissonGoals(lambda){let L=Math.exp(-lambda),k=0,p=1;do{k++;p*=Math.random()}while(p>L&&k<9);return Math.max(0,k-1)}
+function tacticalProfile(team){
+ const user=team.name===game.user, formation=user?(game.tactics.formation||'4-2-3-1'):'4-3-3', style=user?(game.tactics.style||'Dengeli'):'Dengeli';
+ const nums=formation.split('-').map(Number), defenders=nums[0]||4, mids=nums[1]||3, forwards=nums.slice(2).reduce((a,b)=>a+b,0);
+ const shapeAttack=Math.max(-.12,Math.min(.12,(forwards-3)*.035+(mids-3)*.012));
+ const shapeDefense=Math.max(-.13,Math.min(.13,(defenders-4)*.045));
+ const styles={ 'Hücum':{attack:.19,defence:-.14,tempo:.08},'Dengeli':{attack:0,defence:0,tempo:0},'Savunma':{attack:-.15,defence:.20,tempo:-.05},'Kontra atak':{attack:.09,defence:.13,tempo:.04},'Yüksek pres':{attack:.15,defence:-.11,tempo:.12},'Topa sahip olma':{attack:.07,defence:.07,tempo:-.02} };
+ return {formation,style,attack:(styles[style]||styles.Dengeli).attack+shapeAttack,defence:(styles[style]||styles.Dengeli).defence+shapeDefense,tempo:(styles[style]||styles.Dengeli).tempo};
+}
+function teamFormBoost(team){let xi=team.name===game.user?(ensureLineup(),game.tactics.lineup):getStartingXI(team.name);let ps=xi.map(id=>team.players.find(p=>p.id===id)).filter(Boolean);return ps.length?ps.reduce((s,p)=>s+((Number(p.form)||7)-7)*.48-(p.injury>0?1.15:0),0)/ps.length:0}
+function matchSim(home,away){
+ const hp=tacticalProfile(home),ap=tacticalProfile(away);
+ let homeStrength=home.rating+2.8+teamFormBoost(home)+rand(-3,3);
+ let awayStrength=away.rating+teamFormBoost(away)+rand(-3,3);
+ let diff=homeStrength-awayStrength;
+ let homeXG=Math.max(.2,Math.min(3.35,(1.32+diff/18+rand(-2,2)/10)*(1+hp.attack)*(1-ap.defence*.42)*(1+hp.tempo*.35)));
+ let awayXG=Math.max(.18,Math.min(3.0,(1.12-diff/19+rand(-2,2)/10)*(1+ap.attack)*(1-hp.defence*.42)*(1+ap.tempo*.35)));
+ return [Math.min(6,poissonGoals(homeXG)),Math.min(6,poissonGoals(awayXG))];
+}
+function applyMatch(hn,an,hs,as){let h=clubObj(hn),a=clubObj(an);[h,a].forEach(t=>{t.played++;});h.gf+=hs;h.ga+=as;a.gf+=as;a.ga+=hs;if(hs>as){h.w++;h.points+=3;a.l++}else if(hs<as){a.w++;a.points+=3;h.l++}else{h.d++;a.d++;h.points++;a.points++;}}
+function nextMatch(){let fx=game.fixtures.find(f=>!f.played);if(!fx)return;let h=clubObj(fx.home),a=clubObj(fx.away);let [hs,as]=matchSim(h,a);fx.played=true;fx.score=[hs,as];applyMatch(fx.home,fx.away,hs,as);if(fx.home===game.user||fx.away===game.user){let me=fx.home===game.user?hs:as,opp=fx.home===game.user?as:hs;game.news.unshift(`${fx.home} ${hs}-${as} ${fx.away} | ${me>opp?'Galibiyet':me===opp?'Beraberlik':'Mağlubiyet'}`);return fx;}return fx;}
+function playWeek(){let round=game.week;let matches=game.fixtures.filter(f=>f.round===round&&!f.played);let userFx=matches.find(f=>f.home===game.user||f.away===game.user);if(!userFx){toast('Bu haftaki maç bulunamadı');return}showMatch(userFx); }
+function showMatch(fx){
+ let home=clubObj(fx.home),away=clubObj(fx.away);
+ let [hs,as]=matchSim(home,away);
+ fx.played=true;fx.score=[hs,as];applyMatch(fx.home,fx.away,hs,as);
+ game.fixtures.filter(f=>f.round===fx.round&&!f.played).forEach(f=>{
+   let [x,y]=matchSim(clubObj(f.home),clubObj(f.away));
+   f.played=true;f.score=[x,y];applyMatch(f.home,f.away,x,y)
+ });
+ let events=[
+ 'Orta sahada baskı var.','Savunma arkasına harika bir koşu!','Kaleci açıyı iyi kapattı.',
+ 'Tribünler ayağa kalktı!','Tehlikeli bir serbest vuruş.','Top direkten döndü!',
+ 'Ceza sahasında karambol!','Oyunun temposu yükseliyor.','Kanattan etkili bir orta.',
+ 'GOOOL! Muhteşem bir bitiriş!','Hakem faul düdüğünü çalıyor.','Kaleci inanılmaz kurtardı!',
+ 'Son dakikalara giriyoruz.','Savunma topu uzaklaştırdı.','Hızlı hücum fırsatı!',
+ 'Pas arası ve top yeniden kazanıldı.','Şut savunmadan döndü.','Korner kullanılıyor.',
+ 'Oyuncu çizgiye indi, içeri çevirdi!','Tehlike büyüyor, savunma son anda araya girdi.',
+ 'Orta alanda ikili mücadele!','Hakem oyunu devam ettiriyor.','Ceza sahası dışından sert bir şut!',
+ 'Top ağlarda ama bayrak havada!','Kaleci oyunu hızlı başlatıyor.','Hücum oyuncusu boş alanı gördü.','Direkten döndü! Savunma derin bir nefes alıyor.','Kaleci uzandı ve köşeden çıkardı!','Arka direkte bomboş kaldı, kafa vuruşu az farkla dışarıda.','Kornerden gelen topa yükseldi, savunma çizgiden çıkardı.','Son dakika! Herkes ceza sahasına geldi.','Önde baskı sonuç verdi, top tehlikeli bölgede kazanıldı.','Kontra atak üçe iki gelişiyor!','Pas trafiğiyle rakip savunmanın kilidi açılmaya çalışılıyor.'
+ ];
+ // Match is resolved before the live presentation so the result is deterministic;
+ // the user sees the clock and commentary unfold over ~10 seconds.
+  const homeScorers=awardScorers(fx.home,hs),awayScorers=awardScorers(fx.away,as);
+  [home,away].forEach(t=>{const ids=t.name===game.user?(ensureLineup(),game.tactics.lineup):getStartingXI(t.name);ids.forEach(id=>{const p=t.players.find(x=>x.id===id);if(p)p.apps++})});
+  const goalEvents=[...homeScorers.map(x=>({...x,team:fx.home})),...awayScorers.map(x=>({...x,team:fx.away}))];
+  for(let i=goalEvents.length-1;i>0;i--){const j=rand(0,i);[goalEvents[i],goalEvents[j]]=[goalEvents[j],goalEvents[i]]}
+  let timeline=[],goalCursor=0,liveHome=0,liveAway=0;
+  for(let i=0;i<10;i++){let minute=Math.min(90,Math.round((i+1)*9)),line=pick(events),goals=[];const target=Math.round((i+1)*goalEvents.length/10);while(goalCursor<target){const g=goalEvents[goalCursor++];goals.push(g);if(g.team===fx.home)liveHome++;else liveAway++}if(goals.length)line=goals.map(g=>'GOOOL! '+g.name+' attı! '+g.team+' öne geçiyor!'+(g.assist?' Asist: '+g.assist+'.':'')).join(' ');if(i===9)line+=(goals.length?' ':'')+'Hakem son düdüğü çalıyor! Maç sona erdi.';timeline.push({minute,line,homeScore:liveHome,awayScore:liveAway,goal:goals.length>0})}
+  
+ const result=fx.home===game.user?hs-as:as-hs;
+ const me=clubObj(game.user);
+ const rankNow=table().findIndex(x=>x.name===game.user)+1;const performance=result>0?1:result===0?0:-1;game.trust=Math.max(0,Math.min(100,game.trust+performance*(rankNow<=4?2:3)+(rankNow>=16&&result<0?-1:0)));game.fan=Math.max(0,Math.min(100,game.fan+performance*(hs+as>=4?2:1)+(result>0&&rankNow<=5?1:0)));game.rep=Math.max(0,Math.min(100,game.rep+performance*(rankNow<=6?2:1)));
+ me.players.forEach(p=>{if(p.injury>0)p.injury=Math.max(0,p.injury-1)});
+ ensureLineup();me.players.filter(p=>game.tactics.lineup.includes(p.id)).forEach(p=>{
+   p.form=Math.max(4,Math.min(10,p.form+(result>0?rand(0,1):result<0?rand(-1,0):0)));
+   if(Math.random()<.018)p.injury=Math.max(p.injury,rand(1,4))
+ });
+ game.week++;generatePlayerOffers();processSponsorPayments();if(game.week>34){game.week=35;game.news.unshift('Sezonun 34 haftası tamamlandı.')}
+ game.budget+=.45;game.weeklyWage=me.players.reduce((s,p)=>s+p.wage,0);
+ save();
+ document.getElementById('modal').innerHTML=`<div class="modal"><div class="modalbox">
+ <div class="small"><span class="livepulse"></span>CANLI MAÇ · 90 DAKİKA / 10 SANİYE · ${fx.round}. HAFTA</div>
+ <h2 style="text-align:center">${fx.home} <span class="small">-</span> ${fx.away}</h2>
+ <div class="scoreboard" id="scoreboard"><div class="score" id="liveScore">0 : 0</div></div>
+ <div style="text-align:center;margin:-4px 0 14px"><span class="matchclock" id="liveClock">00'</span><span class="small"> / 90' maç dakikası</span></div>
+ <div class="row"><div class="card">Topa sahip olma<br><b>${rand(42,58)}% - ${rand(42,58)}%</b><p class="small">Şut: ${rand(7,18)} - ${rand(5,15)}</p></div><div class="card">Maç durumu<br><b id="liveStatus">Karşılaşma başladı</b><p class="small">Canlı anlatım</p></div></div>
+ <h3><span class="livepulse"></span>Spiker anlatımı</h3><div class="feed" id="liveFeed"><p>0' Santra yapıldı! Hakemin ilk düdüğüyle maç başladı.</p></div>
+ <div id="matchEnd" class="hidden"><div class="card"><h3>MAÇ SONUCU</h3><div class="score">${hs} : ${as}</div><b>${result>0?'3 puan kazandın':result===0?'1 puan kazandın':'Bu kez olmadı'}</b><p class="small">Maç geliri: €450.000 · Lig puan tablosu güncellendi.</p></div><button class="primary" style="width:100%;margin-top:12px" onclick="closeModal();render()">Devam et</button></div>
+ </div></div>`;
+ let step=0;
+ const timer=setInterval(()=>{
+   if(!document.getElementById('liveFeed')){clearInterval(timer);return}
+   step++;
+   let item=timeline[step-1];
+   let clock=document.getElementById('liveClock');
+   if(clock)clock.textContent=String(item.minute).padStart(2,'0')+"'";
+   let feed=document.getElementById('liveFeed');
+   if(feed){feed.insertAdjacentHTML('beforeend',`<p><span class="small">${item.minute}'</span> ${item.line}</p>`);feed.scrollTop=feed.scrollHeight}
+   {let score=document.getElementById('liveScore');if(score)score.textContent=item.homeScore+' : '+item.awayScore;if(item.goal){const board=document.getElementById('scoreboard');if(board){board.classList.remove('goal-flash');void board.offsetWidth;board.classList.add('goal-flash')}}}
+   if(step===10){
+     clearInterval(timer);
+     let status=document.getElementById('liveStatus');if(status)status.textContent='Maç tamamlandı';
+     let end=document.getElementById('matchEnd');if(end)end.classList.remove('hidden');
+     let pulse=document.querySelector('.modalbox .livepulse');if(pulse)pulse.style.background='#4bd19a';
+     save()
+   }
+ },1000);
+}
+let careerSkip={active:false,running:false,startWeek:1,target:0,current:1,speed:1,timer:null,logs:[]};
+function skipWageSummary(){const t=clubObj(game.user),used=t.players.reduce((a,p)=>a+(Number(p.wage)||0),0),limit=(Number(t.wageBudget)||1.2)*1e6;return `Maaş ${money(used/1e6)}/hafta · boş kapasite ${money(Math.max(0,limit-used)/1e6)}/hafta`;}
+function simulateCareerWeek(round){
+ const matches=game.fixtures.filter(f=>f.round===round&&!f.played);let userMatch=null,userScorers=[],budgetBefore=game.budget;
+ matches.forEach(f=>{const h=clubObj(f.home),a=clubObj(f.away);if(!h||!a)return;const [hs,as]=matchSim(h,a);f.played=true;f.score=[hs,as];applyMatch(f.home,f.away,hs,as);const hsc=awardScorers(f.home,hs),asc=awardScorers(f.away,as);[h,a].forEach(team=>{const ids=team.name===game.user?(ensureLineup(),game.tactics.lineup):getStartingXI(team.name);ids.forEach(id=>{const pl=team.players.find(x=>x.id===id);if(pl)pl.apps=(pl.apps||0)+1})});if(f.home===game.user||f.away===game.user){userMatch={fixture:f,hs,as};userScorers=[...hsc.map(x=>({...x,side:f.home})),...asc.map(x=>({...x,side:f.away}))]}});
+ const me=clubObj(game.user);if(userMatch){const diff=userMatch.fixture.home===game.user?userMatch.hs-userMatch.as:userMatch.as-userMatch.hs;const rank=table().findIndex(x=>x.name===game.user)+1,perf=diff>0?1:diff===0?0:-1;game.trust=Math.max(0,Math.min(100,(game.trust||65)+perf*(rank<=4?2:3)+(rank>=16&&diff<0?-1:0)));game.fan=Math.max(0,Math.min(100,(game.fan||70)+perf*(userMatch.hs+userMatch.as>=4?2:1)+(diff>0&&rank<=5?1:0)));game.rep=Math.max(0,Math.min(100,(game.rep||50)+perf*(rank<=6?2:1)))}
+ // Weekly recovery, small form swings and occasional minor injuries mirror the match flow.
+ me.players.forEach(pl=>{if(pl.injury>0)pl.injury=Math.max(0,pl.injury-1)});ensureLineup();me.players.filter(pl=>game.tactics.lineup.includes(pl.id)).forEach(pl=>{pl.form=Math.max(4,Math.min(10,(Number(pl.form)||7)+(userMatch?(userMatch.fixture.home===game.user?userMatch.hs-userMatch.as:userMatch.as-userMatch.hs)>0?rand(0,1):(userMatch.fixture.home===game.user?userMatch.hs-userMatch.as:userMatch.as-userMatch.hs)<0?rand(-1,0):0:0)));if(Math.random()<.018)pl.injury=Math.max(pl.injury,rand(1,4))});
+ // Count down outgoing loans and return players when their loan ends.
+ game.teams.forEach(team=>(team.players||[]).forEach(pl=>{if(pl.loaned&&Number(pl.loanWeeks)>0){pl.loanWeeks=Math.max(0,pl.loanWeeks-1);if(pl.loanWeeks===0){pl.loaned=false;delete pl.loanWeeks;game.news.unshift(`${pl.name} kiralık sözleşmesini tamamlayarak ${team.name} kadrosuna döndü.`)}}}));
+ game.week=round+1;generatePlayerOffers();processSponsorPayments();refreshSponsorOffers();
+ if(game.week>34){game.week=35;game.news.unshift('Sezonun 34 haftası tamamlandı.')}
+ game.budget+=.45;game.weeklyWage=me.players.reduce((a,p)=>a+(Number(p.wage)||0),0);
+ const rank=table().findIndex(x=>x.name===game.user)+1,fx=userMatch&&userMatch.fixture,win=fx&&(fx.home===game.user?userMatch.hs>userMatch.as:userMatch.as>userMatch.hs),draw=fx&&userMatch.hs===userMatch.as;
+ const score=fx?`${fx.home} ${userMatch.hs} - ${userMatch.as} ${fx.away}`:'Bu hafta takımının maçı bulunamadı';if(fx)game.news.unshift(`${score} | ${win?'Galibiyet':draw?'Beraberlik':'Mağlubiyet'}`);
+ const scorers=userScorers.length?userScorers.map(x=>`${x.name}${x.assist?' (A: '+x.assist+')':''}`).join(', '):'Gol katkısı yok';
+ const badge=win?'G':draw?'B':'M';const delta=game.budget-budgetBefore;
+ const news=(game.news||[]).slice(0,2).join(' · ')||'Yeni haber yok';
+ const log={round,score,badge,scorers,rank,budget:game.budget,budgetDelta:delta,news,wage:skipWageSummary()};careerSkip.logs.push(log);save();return log;
+}
+function renderSkipModal(){const c=careerSkip;document.getElementById('modal').innerHTML=`<div class="modal"><div class="modalbox skip-modal"><div class="sectionhead"><div><div class="small"><span class="livepulse"></span> KARİYER TAKVİMİ</div><h2>Haftalar simüle ediliyor</h2><p class="small">${c.startWeek}. haftadan ${c.target}. haftaya ilerleme</p></div><span class="tag">${c.logs.length}/${Math.max(0,c.target-c.startWeek+1)} hafta</span></div><div class="skip-controls"><div class="actions"><button class="${c.speed===1?'primary':''}" onclick="setSkipSpeed(1)">1x</button><button class="${c.speed===2?'primary':''}" onclick="setSkipSpeed(2)">2x</button><button class="${c.speed===4?'primary':''}" onclick="setSkipSpeed(4)">Hızlı Bitir</button></div><button class="primary" onclick="toggleCareerSkip()">${c.running?'Durdur':'Devam Et'}</button></div><div class="skip-progress"><span style="width:${Math.min(100,c.logs.length/Math.max(1,c.target-c.startWeek+1)*100)}%"></span></div><div id="skipFeed" class="skip-feed">${c.logs.map(skipCardHtml).join('')}</div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="ghost" onclick="closeSkipModal()">Kapat</button></div></div></div>`;const feed=document.getElementById('skipFeed');if(feed)feed.scrollTop=feed.scrollHeight;}
+function skipCardHtml(l){return `<div class="skip-week-card"><div class="skip-week-head"><b>${l.round}. Hafta</b><span class="form-badge ${l.badge==='G'?'good':l.badge==='B'?'draw':'bad'}">${l.badge}</span><span class="small">Lig sırası: ${l.rank}.</span></div><b class="skip-score">${l.score}</b><div class="small">Gol / asist: ${l.scorers}</div><div class="metric"><span>Bütçe özeti</span><b>${money(l.budget)} <span class="small">(${l.budgetDelta>=0?'+':''}${money(l.budgetDelta)})</span></b></div><div class="small">${l.wage}</div><div class="small skip-news">Haber: ${l.news}</div></div>`}
+function appendSkipCard(l){const feed=document.getElementById('skipFeed');if(feed){feed.insertAdjacentHTML('beforeend',skipCardHtml(l));feed.lastElementChild?.classList.add('skip-enter');feed.scrollTop=feed.scrollHeight}const progress=document.querySelector('.skip-progress span');if(progress){const start=careerSkip.logs.length?careerSkip.logs[0].round:careerSkip.current;progress.style.width=Math.min(100,careerSkip.logs.length/Math.max(1,careerSkip.target-start+1)*100)+'%'}const count=document.querySelector('.skip-modal .tag');if(count)count.textContent=`${careerSkip.logs.length}/${Math.max(1,careerSkip.target-careerSkip.startWeek+1)} hafta`;}
+function skipTick(){const c=careerSkip;if(!c.running)return;if(game.week>c.target||game.week>34){c.running=false;save();renderSkipModal();return}const round=game.week,log=simulateCareerWeek(round);c.current=round;appendSkipCard(log);if(game.week>c.target||game.week>34){c.running=false;save();renderSkipModal();return}c.timer=setTimeout(skipTick,c.speed===1?1200:c.speed===2?600:70)}
+function startCareerSkip(){if(!game)return;const sel=document.getElementById('skipTarget'),target=Math.max(game.week,Math.min(34,Number(sel?.value)||game.week));if(target<=game.week-1){toast('Hedef hafta mevcut haftadan ileri olmalı');return}careerSkip={active:true,running:true,startWeek:game.week,target,current:game.week,speed:1,timer:null,logs:[]};renderSkipModal();skipTick()}
+function toggleCareerSkip(){if(!careerSkip.active)return;if(careerSkip.running){careerSkip.running=false;if(careerSkip.timer)clearTimeout(careerSkip.timer);careerSkip.timer=null;save();renderSkipModal();toast('Atlama durduruldu · ilerleme kaydedildi')}else{careerSkip.running=true;renderSkipModal();skipTick()}}
+function setSkipSpeed(speed){careerSkip.speed=speed;renderSkipModal();if(careerSkip.running){if(careerSkip.timer)clearTimeout(careerSkip.timer);skipTick()}}
+function closeSkipModal(){if(careerSkip.running){careerSkip.running=false;if(careerSkip.timer)clearTimeout(careerSkip.timer);save()}careerSkip.active=false;document.getElementById('modal').innerHTML='';render()}
+function closeModal(){document.getElementById('modal').innerHTML=''}
+function startCareer(){let n=document.getElementById('managerName').value.trim();if(!n){toast('Teknik direktör adını yaz');return}game=fresh(selected,n);refreshSponsorOffers();game.weeklyWage=clubObj(game.user).players.reduce((s,p)=>s+p.wage,0);save();page='home';render()}
+function nav(p){page=p==='sponsor'?'finance':p;if(page==='finance')financeTab='overview';render()}
+document.addEventListener('toggle',function(event){
+ if(!event.target.matches('details.nav-group')||!event.target.open)return;
+ document.querySelectorAll('details.nav-group').forEach(group=>{if(group!==event.target)group.open=false});
+},true);
+function setFinanceTab(tab){financeTab=tab;render()}
+function render(){if(!game){renderStart();return}let team=clubObj(game.user),rank=table().findIndex(t=>t.name===game.user)+1,fx=game.fixtures.find(f=>!f.played&&(f.home===game.user||f.away===game.user));document.getElementById('app').innerHTML=`<div class="wrap"><header class="topbar"><div><div class="brand">RISE TO GLORY</div><div class="small">E GAMES · TÜRKİYE SÜPER LİG · ${game.season}/${game.season+1}</div></div><div class="row" style="flex:0"><span class="tag">${game.manager}</span><span class="tag">${game.user}</span><button onclick="save();toast('Kariyer kaydedildi')">Kaydet</button><button class="ghost" onclick="if(confirm('Kariyer sıfırlansın mı?')){game=null;localStorage.removeItem('legendary_coach_save_v4');render()}">Yeni kariyer</button></div></header><div class="layout"><aside class="nav" id="mainNav">
+<button class="home-nav ${page==='home'?'active':''}" onclick="nav('home')"><span class="home-nav-icon">⌂</span> Ana Sayfa</button>
+<details class="nav-group"><summary>Genel Yönetim</summary><div class="nav-links">
+${[['club','Kulüp Yönetimi'],['season','Sezon Merkezi']].map(([id,label])=>`<button class="${page===id?'active':''}" onclick="nav('${id}')">${label}</button>`).join('')}
+</div></details>
+<details class="nav-group"><summary>Kadro & Transfer</summary><div class="nav-links">
+${[['squad','Kadrom'],['tactics','Taktikler'],['market','Transfer Merkezi'],['sales','Oyuncu Satışları'],['offers','Gelen Teklifler']].map(([id,label])=>`<button class="${page===id?'active':''}" onclick="nav('${id}')">${label}</button>`).join('')}
+</div></details>
+<details class="nav-group"><summary>Lig & İstatistik</summary><div class="nav-links">
+${[['table','Lig Tablosu'],['fixtures','Fikstür'],['leagueStats','Lig İstatistikleri'],['stats','Oyuncu İstatistikleri']].map(([id,label])=>`<button class="${page===id?'active':''}" onclick="nav('${id}')">${label}</button>`).join('')}
+</div></details>
+<details class="nav-group"><summary>Finans</summary><div class="nav-links">
+<button class="${page==='finance'?'active':''}" onclick="nav('finance')">Bütçe & Sponsorluklar</button>
+</div></details>
+</aside><main class="content ${page==='home'?'home-content':''}">${page==='home'?`<div class="home-dashboard">${pageContent(team,rank,fx)}</div>`:pageContent(team,rank,fx)}</main></div></div>`}
+let selectedSquadPlayer=null, draggedSquadPlayer=null;
+let financeTab='overview';
+function formationRows(){return (game.tactics.formation||'4-2-3-1').split('-').map(Number).reverse()}
+function getStartingXI(teamName){const t=clubObj(teamName);if(!t)return[];const roles=['KL','STP','STP','SLB','SGB','MO','MO','MO','SĞK','SLK','SNT'],used=new Set(),ids=[];for(const role of roles){const p=t.players.filter(x=>!used.has(x.id)&&x.injury<=0&&x.pos===role).sort((a,b)=>(b.rating+(b.form-7)*.35)-(a.rating+(a.form-7)*.35))[0];if(p){ids.push(p.id);used.add(p.id)}}while(ids.length<11){const p=t.players.filter(x=>!used.has(x.id)&&x.injury<=0).sort((a,b)=>(b.rating+(b.form-7)*.35)-(a.rating+(a.form-7)*.35))[0]||t.players.filter(x=>!used.has(x.id)).sort((a,b)=>b.rating-a.rating)[0];if(!p)break;ids.push(p.id);used.add(p.id)}return ids.slice(0,11)}
+function ensureLineup(){const t=clubObj(game.user);if(!Array.isArray(game.tactics.lineup))game.tactics.lineup=[];game.tactics.lineup=game.tactics.lineup.filter(id=>t.players.some(p=>p.id===id)).slice(0,11);if(!game.tactics.lineup.length)game.tactics.lineup=getStartingXI(game.user);const used=new Set(game.tactics.lineup);while(game.tactics.lineup.length<11){const p=t.players.filter(x=>!used.has(x.id)&&x.injury<=0).sort((a,b)=>(b.rating+(b.form-7)*.35)-(a.rating+(a.form-7)*.35))[0]||t.players.filter(x=>!used.has(x.id)).sort((a,b)=>b.rating-a.rating)[0];if(!p)break;game.tactics.lineup.push(p.id);used.add(p.id)}}
+function getFormationSlots(){const rows=formationRows(),slots=[];let idx=0;rows.forEach((count,row)=>{const y=12+row*(76/Math.max(1,rows.length-1));for(let j=0;j<count;j++)slots.push({index:idx++,x:(j+1)*100/(count+1),y})});slots.push({index:10,x:50,y:94});return slots.slice(0,11)}
+function assignSquadPlayer(slotIndex,id){const t=clubObj(game.user);ensureLineup();if(!Number.isInteger(slotIndex)||slotIndex<0||slotIndex>10||!id||!t.players.some(p=>p.id===id))return;const old=game.tactics.lineup[slotIndex];if(old===id)return;const existing=game.tactics.lineup.indexOf(id);if(existing>=0){game.tactics.lineup[existing]=old;}game.tactics.lineup[slotIndex]=id;save();render();toast('İlk 11 güncellendi')}
+function selectBenchPlayer(id){selectedSquadPlayer=id;render()}
+function beginSquadDrag(e,id){draggedSquadPlayer=id;if(e.dataTransfer){e.dataTransfer.setData('text/plain',id);e.dataTransfer.effectAllowed='move'}}
+function allowSquadDrop(e){e.preventDefault();if(e.dataTransfer)e.dataTransfer.dropEffect='move'}
+function dropSquadPlayer(e,index){e.preventDefault();const id=(e.dataTransfer&&e.dataTransfer.getData('text/plain'))||draggedSquadPlayer||selectedSquadPlayer;if(id)assignSquadPlayer(index,id)}
+function awardScorers(teamName,count){
+ const t=clubObj(teamName);if(!t||!count)return[];const xi=(teamName===game.user?(()=>{ensureLineup();return game.tactics.lineup})():getStartingXI(teamName));
+ const source=xi.map(id=>t.players.find(p=>p.id===id)).filter(Boolean);if(!source.length)return[];
+ const profile=tacticalProfile(t),attackers=source.filter(p=>['SNT','SĞK','SLK','MO'].includes(p.pos));
+ const weighted=attackers.length?attackers:source;const result=[];
+ const pickWeighted=arr=>{const weights=arr.map(p=>Math.max(.15,(p.pos==='SNT'?2.5:['SĞK','SLK'].includes(p.pos)?1.8:p.pos==='MO'?1.15:.35)*(1+((p.form||7)-7)*.09)*(p.injury>0?.35:1)*(1+profile.attack*.5)));let r=Math.random()*weights.reduce((a,b)=>a+b,0);for(let i=0;i<arr.length;i++){r-=weights[i];if(r<=0)return arr[i]}return arr[arr.length-1]};
+ for(let i=0;i<count;i++){const scorer=pickWeighted(weighted);scorer.goals=(scorer.goals||0)+1;let assist=null;if(Math.random()<Math.min(.82,.68+profile.attack*.25)&&source.length>1){const choices=source.filter(p=>p.id!==scorer.id&&['MO','SĞK','SLK','SNT'].includes(p.pos));const ap=choices.length?choices:source.filter(p=>p.id!==scorer.id);if(ap.length){assist=pickWeighted(ap);assist.assists=(assist.assists||0)+1}}result.push({name:scorer.name,assist:assist&&assist.name})}return result
+}
+function renderTactics(t){
+ ensureLineup();
+ const lineup=game.tactics.lineup;
+ const ordered=[...t.players].sort((a,b)=>(a.injury>0)-(b.injury>0)||b.rating-a.rating);
+ const rows=lineup.map((id,index)=>{
+   const current=t.players.find(p=>p.id===id);
+   const options=ordered.map(p=>`<option value="${p.id}" ${p.id===id?'selected':''}>${p.name} · ${p.pos} · GEN ${p.rating} · Form ${Number(p.form||7).toFixed(1)} ${p.injury>0?'· SAKAT '+p.injury+' hf':''}</option>`).join('');
+   return `<div class="xi-row"><div class="xi-number">${index+1}</div><div class="xi-current"><b>${current?current.name:'Oyuncu seçilmedi'}</b><small>${current?current.pos+' · GEN '+current.rating+' · Form '+Number(current.form||7).toFixed(1)+(current.injury>0?' · SAKAT '+current.injury+' hf':''):'-'}</small></div><select class="field xi-select" aria-label="${index+1}. oyuncu" onchange="assignSquadPlayer(${index},this.value)">${options}</select></div>`;
+ }).join('');
+ const starters=new Set(lineup);
+ const bench=t.players.filter(p=>!starters.has(p.id)).sort((a,b)=>b.rating-a.rating);
+ return `<div class="sectionhead"><h2>İlk 11 düzenleme</h2><span class="tag">${lineup.length}/11 oyuncu</span></div>
+ <div class="row"><div><label class="small">Diziliş</label><select class="field" id="formation" onchange="game.tactics.formation=this.value;ensureLineup();save();render()">${['4-3-3','4-2-3-1','4-4-2','3-5-2','5-3-2','4-1-4-1'].map(x=>`<option ${game.tactics.formation===x?'selected':''}>${x}</option>`).join('')}</select></div><div><label class="small">Oyun planı</label><select class="field" id="style" onchange="game.tactics.style=this.value;save()">${['Hücum','Dengeli','Savunma','Kontra atak','Yüksek pres','Topa sahip olma'].map(x=>`<option ${game.tactics.style===x?'selected':''}>${x}</option>`).join('')}</select></div></div>
+ <div class="card xi-editor"><h3 style="margin:0 0 6px">Oyuncu yerleştirme</h3><p class="small" style="margin-top:0">Her satırdaki menüden oyuncunu seç. Zaten ilk 11’de olan bir oyuncuyu seçersen iki oyuncunun yeri otomatik değişir.</p>${rows}</div>
+ <div class="card" style="margin-top:14px"><div class="sectionhead"><h3 style="margin:0">Yedekler (${bench.length})</h3><span class="small">Reytinge göre sıralı</span></div><div class="bench-grid">${bench.map(p=>`<div class="bench-tile"><b>${p.name}</b><span>${p.pos} · GEN ${p.rating} · Form ${Number(p.form||7).toFixed(1)} ${p.injury>0?'· SAKAT '+p.injury+' hf':''}</span></div>`).join('')}</div></div><div class="card" style="margin-top:14px"><div class="sectionhead"><div><div class="small">TAKTİK ÖNİZLEME</div><h3 style="margin:3px 0">${game.tactics.formation||'4-2-3-1'} · ${game.tactics.style||'Dengeli'}</h3></div><span class="tag">${lineup.length}/11</span></div><div style="position:relative;height:300px;border:3px solid #dce9d5;border-radius:12px;overflow:hidden;background:repeating-linear-gradient(0deg,#17613f,#17613f 36px,#1b6b45 36px,#1b6b45 72px)"><div style="position:absolute;left:0;right:0;top:50%;border-top:1px solid #ffffff88"></div><div style="position:absolute;width:76px;height:76px;border:1px solid #ffffff88;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)"></div>${getFormationSlots().map((slot,i)=>{const p=t.players.find(x=>x.id===lineup[i]);return `<div title="${p?p.name:'—'}" style="position:absolute;left:${slot.x}%;top:${slot.y}%;transform:translate(-50%,-50%);width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:${p&&p.injury>0?'#a94343':'#f2f4ec'};color:#122333;border:2px solid #e6bd63;font-size:9px;font-weight:900">${p?p.pos:'?'}</div>`}).join('')}</div><p class="small">Sakat oyuncular otomatik ilk 11'e alınmaz. Oyuncu formu ve sakatlık durumu maç gücünü etkiler.</p></div>`;
+}
+function leagueLeaders(){const players=game.teams.flatMap(t=>t.players.map(p=>({...p,team:t.name})));const topGoals=[...players].sort((a,b)=>(b.goals||0)-(a.goals||0)).slice(0,10),topAssists=[...players].sort((a,b)=>(b.assists||0)-(a.assists||0)).slice(0,10);const rows=(arr,key)=>arr.map((p,i)=>`<tr><td>${i+1}</td><td><b>${p.name}</b><div class="small">${p.team}</div></td><td>${p[key]||0}</td><td>${p.apps||0}</td></tr>`).join('');return `<div class="sectionhead"><h2>Lig istatistikleri</h2><span class="tag">${game.season}/${game.season+1}</span></div><div class="leader-grid"><div class="card"><h3>⚽ Gol krallığı</h3><div class="tablewrap"><table><tr><th>#</th><th>Oyuncu / Takım</th><th>Gol</th><th>Maç</th></tr>${rows(topGoals,'goals')}</table></div></div><div class="card"><h3>🎯 Asist krallığı</h3><div class="tablewrap"><table><tr><th>#</th><th>Oyuncu / Takım</th><th>Asist</th><th>Maç</th></tr>${rows(topAssists,'assists')}</table></div></div></div>`}
+
+function pageContent(t,rank,fx){if(page==='home')return `<div class="sectionhead"><div><div class="small">HOŞ GELDİN, TEKNİK DİREKTÖR</div><h2>${game.manager}</h2></div><span class="tag">Yönetim güveni ${game.trust}/100</span></div><div class="grid stats"><div class="card stat"><span>Transfer bütçesi</span><strong>${money(game.budget)}</strong></div><div class="card stat"><span>Lig sırası</span><strong>${rank} / ${game.teams.length}</strong></div><div class="card stat"><span>Takım reytingi</span><strong>${t.rating}</strong></div><div class="card stat"><span>Hafta</span><strong>${Math.min(game.week,34)} / 34</strong></div></div><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"><div class="card"><div class="small">SIRADAKİ MAÇ</div><h2>${fx?fx.home+' - '+fx.away:'Sezon tamamlandı'}</h2><p class="sub">${fx?'Türkiye Ligi · '+fx.round+'. hafta':'Yeni sezon için sezon sonu ekranına git'}</p><button class="primary" onclick="${fx?'playWeek()':'nav("season")'}">${fx?'Maçı oynat':'Sezon sonu'}</button></div><div class="card"><div class="small">SEZON DURUMU</div><p><b>${rank>=16?'⚠ Küme düşme hattındasın':'Küme düşme hattı dışında'}</b> · ${rank}. sıra</p><p class="small">Son 3 takım düşer. Sponsor hedefi: ${(game.sponsors||[]).map(sp=>sp.goal).join(' · ')||'Henüz sponsor anlaşması yok'}</p></div><div class="card"><div class="small">KULÜP HABERLERİ</div>${game.news.slice(0,5).map(x=>`<p>• ${x}</p>`).join('')}</div></div><div class="card" style="margin-top:14px"><div class="sectionhead"><h2>İlk 5</h2><button onclick="nav('table')">Tam tablo →</button></div>${table().slice(0,5).map((x,i)=>`<div class="metric"><b>${i+1}. ${x.name}</b><b>${x.points} puan</b></div>`).join('')}</div>`;
+if(page==='squad'){let ps=t.players;return `<div class="sectionhead"><h2>Kadro · ${ps.length} oyuncu</h2><span class="tag">Ortalama reyting ${Math.round(ps.reduce((s,p)=>s+p.rating,0)/ps.length)}</span></div><div class="grid stats"><div class="card stat"><span>Haftalık maaş yükü</span><strong>${fmt(ps.reduce((a,p)=>a+(Number(p.wage)||0),0))} €</strong></div><div class="card stat"><span>Maaş bütçesi</span><strong>${fmt((t.wageBudget||1.2)*1e6)} €</strong></div><div class="card stat"><span>Kalan maaş kapasitesi</span><strong>${fmt(Math.max(0,(t.wageBudget||1.2)*1e6-ps.reduce((a,p)=>a+(Number(p.wage)||0),0)))} €</strong></div></div><div class="tablewrap"><table><tr><th>Oyuncu</th><th>Yaş</th><th>Mevki</th><th>GEN</th><th>POT</th><th>Değer</th><th>Maaş / hafta</th><th>Sözleşme</th><th>İşlem</th></tr>${ps.map(p=>`<tr onclick="playerDetail('${p.id}')" style="cursor:pointer"><td><b>${p.name}</b> ${p.injury?`<span class="bad">Sakat · ${p.injury} hafta</span>`:''}</td><td>${p.age}</td><td>${p.pos}</td><td>${p.rating}</td><td>${p.potential}</td><td>${money(p.value)}</td><td>${fmt(p.wage)} €</td><td>${p.years} yıl ${p.loaned?`<span class="tag">Kiralık · ${p.loanWeeks||0} hf.</span>`:''}</td><td><button onclick="event.stopPropagation();renewContract('${p.id}')">Yenile</button></td></tr>`).join('')}</table></div><p class="small">Oyuncu adına dokunarak performans ve sözleşme detayını aç. Sözleşmesi 1 yıl veya daha az kalanları yenilemen önerilir.</p>`}
+ if(page==='tactics')return renderTactics(t);
+if(page==='market'){let ps=game.market.filter(p=>(marketFilter==='Tümü'||p.pos===marketFilter)&&p.name.toLowerCase().includes(marketSearch.toLowerCase()));return `<div class="sectionhead"><h2>Transfer Merkezi</h2><span class="tag">Bütçe ${money(game.budget)}</span></div><div class="row"><input class="field" placeholder="Oyuncu ara..." value="${marketSearch}" oninput="marketSearch=this.value;render()"><select class="field" onchange="marketFilter=this.value;render()">${['Tümü','KL','STP','SLB','SGB','MO','SĞK','SLK','SNT'].map(x=>`<option ${marketFilter===x?'selected':''} value="${x}">${x==='Tümü'?x:names[x]}</option>`).join('')}</select></div><div class="tablewrap" style="margin-top:14px"><table><tr><th>Oyuncu</th><th>Yaş</th><th>Mevki</th><th>GEN</th><th>POT</th><th>Kulüp</th><th>Bonservis</th><th>Maaş</th><th></th></tr>${ps.slice(0,60).map(p=>`<tr><td>${p.name}</td><td>${p.age}</td><td>${p.pos}</td><td>${p.rating}</td><td>${p.potential}</td><td>${p.club}</td><td>${money(p.value)}</td><td>${fmt(p.wage)} €</td><td><button onclick="buy('${p.id}')">İncele</button></td></tr>`).join('')}</table></div><p class="small">Transfer merkezindeki isimler gerçek futbolculardır. Reyting, bonservis ve maaş değerleri oyun içi yaklaşık değerlerdir; kulüp bilgileri gerçek futbolcunun bilinen kulübünü gösterir.</p>`}
+if(page==='sales')return `<div class="sectionhead"><h2>Oyuncu satışları</h2></div><div class="tablewrap"><table><tr><th>Oyuncu</th><th>Mevki</th><th>Reyting</th><th>Değer</th><th>İşlem</th></tr>${t.players.map(p=>`<tr><td>${p.name}</td><td>${p.pos}</td><td>${p.rating}</td><td>${money(p.value)}</td><td>${p.listed?'<span class="tag">Listede</span>':`<button onclick="sell('${p.id}')">Satışa çıkar</button>`}</td></tr>`).join('')}</table></div>`;
+if(page==='sponsor')return `<div class="sectionhead"><h2>Sponsorluk merkezi</h2></div><div class="grid teams">${[['Forma sponsoru',3.5],['Göğüs sponsoru',2.8],['Kol sponsoru',1.2],['Stadyum sponsoru',4.5],['Ana sponsor',5.0],['Malzeme sponsoru',.9]].map(([n,v])=>`<div class="card"><span class="tag">${n}</span><h2>${money(v)} / sezon</h2><p class="small">İlk 5 hedefi · 1 sezon</p><button onclick="sponsor('${n}',${v})">Anlaşma imzala</button></div>`).join('')}</div><p class="small">Her kategori için bir sponsorluk anlaşması imzalanabilir.</p>`;
+if(page==='table')return `<div class="sectionhead"><h2>Lig tablosu</h2><span class="tag">${game.season}/${game.season+1} · ${game.teams.length} takım</span></div><div class="tablewrap"><table><tr><th>#</th><th>Takım</th><th>O</th><th>G</th><th>B</th><th>M</th><th>AG</th><th>YG</th><th>AV</th><th>P</th></tr>${table().map((x,i)=>`<tr class="${i>=15?'relegation-row':''}"><td>${i+1}</td><td><b>${x.name}</b></td><td>${x.played}</td><td>${x.w}</td><td>${x.d}</td><td>${x.l}</td><td>${x.gf}</td><td>${x.ga}</td><td>${x.gf-x.ga}</td><td><b>${x.points}</b></td></tr>`).join('')}</table></div>`;
+if(page==='fixtures')return `<div class="sectionhead"><h2>Fikstür</h2><button class="primary" onclick="playWeek()">Sıradaki maçı oyna</button></div><div class="card week-jump"><div><div class="small">KARİYER TAKVİMİ</div><h3>İleri haftaya atla</h3><p class="small">Mevcut hafta ${Math.min(34,game.week)} · Simülasyon her haftanın maçlarını ve kulüp gelişmelerini işler.</p></div><div class="row" style="align-items:end"><label class="small" for="skipTarget">Hedef hafta</label><select id="skipTarget" class="field">${Array.from({length:34},(_,i)=>`<option value="${i+1}" ${(i+1)===Math.min(34,game.week)?'selected':''}>${i+1}. Hafta</option>`).join('')}</select><button class="primary" onclick="startCareerSkip()">Bu Haftaya Atla</button></div></div>${Array.from({length:34},(_,i)=>`<div class="card" style="margin-bottom:10px"><b>${i+1}. Hafta</b>${game.fixtures.filter(f=>f.round===i+1).map(f=>`<div class="metric"><span>${f.home} - ${f.away}</span><b>${f.played&&f.score?f.score.join(' - '):'—'}</b></div>`).join('')}</div>`).join('')}`;
+if(page==='finance')return `<div class="sectionhead"><div><div class="small">KULÜP EKONOMİSİ</div><h2>Finans Yönetimi</h2></div><span class="tag">Bütçe ve gelirler</span></div>
+<div class="finance-tabs">
+<button class="${financeTab==='overview'?'selected':''}" onclick="setFinanceTab('overview')">Genel Bakış</button>
+<button class="${financeTab==='sponsors'?'selected':''}" onclick="setFinanceTab('sponsors')">Sponsorluklar</button>
+</div>
+${financeTab==='overview'?`<div class="grid stats"><div class="card stat"><span>Transfer bütçesi</span><strong>${money(game.budget)}</strong></div><div class="card stat"><span>Haftalık maaş</span><strong>${money(t.players.reduce((s,p)=>s+p.wage,0)/1e6)}</strong></div><div class="card stat"><span>Sponsorluk geliri</span><strong>${money(game.sponsors.reduce((s,x)=>s+x.value,0))}</strong></div><div class="card stat"><span>Maç geliri</span><strong>${money((game.week-1)*.45)}</strong></div></div><div class="card"><h3>Finans özeti</h3><div class="metric"><span>Başlangıç transfer bütçesi</span><b>${money((clubs.find(c=>c[0]===game.user)||[null,null,team.budget])[2])}</b></div><div class="metric"><span>Mevcut bütçe</span><b>${money(game.budget)}</b></div><div class="metric"><span>Oyuncu maaş yükü / hafta</span><b>${fmt(t.players.reduce((s,p)=>s+p.wage,0))} €</b></div></div>`:`<div class="sectionhead" style="margin-top:18px"><h3>Gelen sponsor teklifleri</h3><button onclick="refreshSponsorOffers();save();render()">Teklifleri yenile</button></div><p class="small">Teklifler kulüp itibarı, lig sırası ve taraftar desteğine göre açılır. Her sponsorluk alanında yalnızca bir anlaşma olabilir. Ödemenin %25’i imzada, kalan kısmı sezon içindeki performansa göre aktarılır.</p><div class="grid teams">${(game.sponsorOffers||[]).map((o,i)=>`<div class="card"><span class="tag">${o.slot}</span><h3>${o.name}</h3><b>${money(o.value)} / sezon</b><p class="small">Şartlar: İtibar ${o.rep}+ · Sıra ilk ${o.rank} · Taraftar ${o.fan}+</p><p class="small">Hedef: ${o.goal}</p><p class="small">Teklif sonu: ${o.expiresWeek||'—'}. hafta</p><button onclick="sponsor(${i})">Teklifi değerlendir</button></div>`).join('')||'<div class="card">Şu anda uygun teklif yok. İtibarını ve lig sıralamanı geliştirip daha sonra tekrar kontrol et.</div>'}</div><div class="sectionhead" style="margin-top:18px"><h3>İmzalanan anlaşmalar</h3></div><div class="grid teams">${(game.sponsors||[]).map(sp=>`<div class="card"><span class="tag">${sp.slot||'Sponsor'}</span><h3>${sp.name}</h3><p>${money(sp.value)} sezonluk</p><p class="small">Hedef: ${sp.goal||'—'} · Alınan: ${money(sp.paid||sp.value)}</p></div>`).join('')||'<div class="card">Henüz anlaşma imzalanmadı.</div>'}</div>`}`;
+if(page==='club')return `<div class="sectionhead"><h2>Kulüp yönetimi</h2></div><div class="grid stats"><div class="card stat"><span>Yönetim güveni</span><strong>${game.trust}/100</strong></div><div class="card stat"><span>Taraftar memnuniyeti</span><strong>${game.fan}/100</strong></div><div class="card stat"><span>Teknik direktör itibarı</span><strong>${game.rep}/100</strong></div></div><div class="card"><h3>Maaş bütçesi</h3><div class="metric"><span>Haftalık maaş bütçesi</span><b>${fmt((team.wageBudget||1.2)*1e6)} €</b></div><div class="metric"><span>Mevcut maaş yükü</span><b>${fmt(team.players.reduce((a,p)=>a+(Number(p.wage)||0),0))} €</b></div><div class="metric"><span>Kalan kapasite</span><b>${fmt(Math.max(0,(team.wageBudget||1.2)*1e6-team.players.reduce((a,p)=>a+(Number(p.wage)||0),0)))} € / hafta</b></div></div><div class="card"><h3>Sezon hedefi</h3><p>${rankGoal()} hedefi · Mevcut sıra ${table().findIndex(x=>x.name===game.user)+1}.</p><p class="small">Sonuçlar yönetim güvenini, taraftar memnuniyetini ve teknik direktör itibarını etkiler.</p></div>`;
+if(page==='stats')return `<div class="sectionhead"><h2>Oyuncu istatistikleri</h2></div><div class="tablewrap"><table><tr><th>Oyuncu</th><th>Mevki</th><th>Maç</th><th>Gol</th><th>Asist</th><th>Form</th></tr>${[...t.players].sort((a,b)=>b.goals-a.goals).map(p=>`<tr><td>${p.name}</td><td>${p.pos}</td><td>${p.apps}</td><td>${p.goals}</td><td>${p.assists}</td><td>${p.form.toFixed(1)}</td></tr>`).join('')}</table></div>`;
+if(page==='offers'){const pending=(game.offers||[]).filter(o=>o.status==='Bekliyor'||o.status==='Revize teklif bekleniyor');return `<div class="sectionhead"><div><h2>Gelen Teklifler</h2><p class="small">Haftalık bonservis ve kiralama teklifleri</p></div><span class="tag">${pending.length} bekleyen</span></div>${pending.length?`<div class="grid teams">${pending.map(o=>`<div class="card"><span class="tag">${o.type}</span><h3>${o.playerName}</h3><p>${o.club} · ${money(o.fee)}</p><p class="small">${o.type==='Kiralama'?'Kiralama süresi: 1 sezon · Maaş katkısı: %'+o.wageShare:'Bonservis teklifi'} · ${o.week}. hafta</p><div class="actions"><button class="primary" onclick="offerAction('${o.id}','accept')">Kabul et</button><button onclick="offerAction('${o.id}','negotiate')">Pazarlık</button><button class="ghost" onclick="offerAction('${o.id}','reject')">Reddet</button></div></div>`).join('')}</div>`:'<div class="card"><p>Şu anda bekleyen teklif yok.</p><p class="small">Oyuncuları satış listesine ekle. Kulüpler her hafta teklif gönderebilir.</p></div>'}<div class="card" style="margin-top:14px"><h3>Teklif geçmişi</h3>${(game.offers||[]).filter(o=>!pending.includes(o)).slice(-8).reverse().map(o=>`<div class="metric"><span>${o.playerName} · ${o.club}</span><b>${o.status}</b></div>`).join('')||'<p class="small">Henüz işlem yapılmadı.</p>'}</div>`;}
+if(page==='season')return `<div class="sectionhead"><h2>Sezon merkezi</h2></div><div class="card"><h2>${game.week>34?'Sezon tamamlandı':'Sezon devam ediyor'}</h2><p>Oynanan hafta: ${Math.min(game.week-1,34)} / 34</p><p>Mevcut sıra: ${rank}.</p><p class="small">Lig 18 takımlı çift devreli 34 haftalık fikstürle oynanır. Sezon sonunda son 3 takım düşer, TFF 1. Lig'den 3 takım yükselir. Yeni sezon geçişiyle lig sıfırlanır, oyuncular yaş alır.</p><button class="primary" onclick="newSeason()">Yeni sezona geç</button></div>`;
+return ''}
+function rankGoal(){return game.user==='Galatasaray'||game.user==='Fenerbahçe'?'Şampiyonluk':game.user==='Beşiktaş'||game.user==='Trabzonspor'?'İlk 3':'İlk 8'}
+function playerDetail(id){let t=clubObj(game.user),p=t.players.find(x=>x.id===id);if(!p)return;const wageUsed=t.players.reduce((a,x)=>a+(Number(x.wage)||0),0),wageLimit=(Number(t.wageBudget)||1.2)*1e6;document.getElementById('modal').innerHTML=`<div class="modal"><div class="modalbox"><div class="row"><div class="crest">${p.pos}</div><div><h2>${p.name}</h2><span class="tag">${names[p.pos]}</span></div></div><div class="grid stats"><div class="card stat"><span>Reyting</span><strong>${p.rating}</strong></div><div class="card stat"><span>Potansiyel</span><strong>${p.potential}</strong></div><div class="card stat"><span>Piyasa değeri</span><strong>${money(p.value)}</strong></div></div><p>Yaş: ${p.age} · Form: ${Number(p.form||7).toFixed(1)} · Sözleşme: ${p.years} yıl</p><p class="${p.injury?'bad':'good'}">${p.injury?'Sakat · '+p.injury+' hafta sonra dönecek':'Sakatlık yok'}</p><p>Haftalık maaş: ${fmt(p.wage)} € · Maç: ${p.apps} · Gol: ${p.goals} · Asist: ${p.assists}</p><div class="budget-inspect"><div class="metric"><span>Takım haftalık maaş bütçesi</span><b>${fmt(wageLimit)} €</b></div><div class="metric"><span>Mevcut maaş yükü</span><b>${fmt(wageUsed)} €</b></div><div class="metric"><span>Kalan maaş kapasitesi</span><b>${fmt(Math.max(0,wageLimit-wageUsed))} €</b></div></div><button onclick="closeModal()">Kapat</button></div></div>`}
+function buy(id){let p=game.market.find(x=>x.id===id);if(!p)return;const t=clubObj(game.user),used=t.players.reduce((a,x)=>a+(Number(x.wage)||0),0),limit=(Number(t.wageBudget)||1.2)*1e6,remaining=Math.max(0,limit-used),loanFee=p.value*.18,permanentRemaining=remaining-p.wage,loanRemaining=remaining-p.wage;document.getElementById('modal').innerHTML=`<div class="modal"><div class="modalbox"><h2>${p.name}</h2><p>${p.age} yaş · ${names[p.pos]} · GEN ${p.rating} · POT ${p.potential}</p><div class="budget-inspect"><div class="metric"><span>Bonservis bedeli</span><b>${money(p.value)}</b></div><div class="metric"><span>Kiralama bedeli</span><b>${money(loanFee)}</b></div><div class="metric"><span>Maaş beklentisi</span><b>${fmt(p.wage)} €/hafta</b></div><div class="metric"><span>Mevcut transfer bütçesi</span><b>${money(game.budget)}</b></div><div class="metric"><span>Haftalık maaş bütçesi</span><b>${fmt(limit)} €</b></div><div class="metric"><span>Mevcut haftalık maaş yükü</span><b>${fmt(used)} €</b></div><div class="metric"><span>Kalan haftalık maaş kapasitesi</span><b>${fmt(remaining)} €</b></div><div class="metric"><span>Transfer sonrası kalan kapasite</span><b class="${permanentRemaining<0?'bad':''}">${fmt(permanentRemaining)} €</b></div></div><div class="actions"><button class="primary" onclick="completeBuy('${id}',false)">Bonservisiyle transfer et</button><button onclick="completeBuy('${id}',true)">Kirala (1 sezon)</button><button class="ghost" onclick="closeModal()">Vazgeç</button></div></div></div>`}
+function completeBuy(id,loan){let p=game.market.find(x=>x.id===id),t=clubObj(game.user);if(!p)return;const currentWage=t.players.reduce((sum,x)=>sum+(Number(x.wage)||0),0),weeklyLimit=Math.max(0,(Number(t.wageBudget)||1.2)*1000000),fee=loan?p.value*.18:p.value;if(game.budget<fee){toast('Bonservis/kiralama bütçesi yetersiz');return}if(currentWage+p.wage>weeklyLimit){toast('Haftalık maaş bütçesi aşılır. Önce maaş yükünü azalt.');return}game.budget-=fee;p.club=game.user;p.years=loan?1:3;p.loaned=!!loan;if(loan)p.loanWeeks=34;else{p.loanWeeks=0;delete p.loanWeeks;}p.listed=false;t.players.push(p);t.rating=Math.round(t.players.reduce((sum,x)=>sum+x.rating,0)/t.players.length);game.market=game.market.filter(x=>x.id!==id);game.news.unshift(`${p.name} kadroya katıldı. Haftalık maaş yükü ${fmt(p.wage)} € arttı.`);save();closeModal();render();toast('Transfer tamamlandı')}
+function sell(id){let p=clubObj(game.user).players.find(x=>x.id===id);if(!p)return;if(clubObj(game.user).players.length<=15){toast('Kadroda en az 15 oyuncu kalmalı');return}p.listed=true;save();render();toast(p.name+' transfer listesine eklendi')}
+function completeSell(id,fee){let t=clubObj(game.user),p=t.players.find(x=>x.id===id);if(!p)return;const price=Math.max(.1,Number(fee)||p.value);game.budget+=price;t.players=t.players.filter(x=>x.id!==id);game.offers=(game.offers||[]).filter(o=>o.playerId!==id);game.news.unshift(`${p.name} ${money(price)} bedelle satıldı.`);save();closeModal();render();toast('Satış tamamlandı')}
+function loanOut(id){let t=clubObj(game.user),p=t.players.find(x=>x.id===id);if(!p)return;game.budget+=p.value*.12;p.loaned=true;p.loanWeeks=34;p.years=Math.max(1,p.years-1);p.listed=false;toast(p.name+' kiralandı · kiralama bedeli alındı');closeModal();save();render()}
+function generatePlayerOffers(){
+ if(!game)return;game.offers=Array.isArray(game.offers)?game.offers:[];
+ const t=clubObj(game.user);if(!t)return;
+ const listed=t.players.filter(p=>p.listed);const candidates=[...listed,...t.players.filter(p=>!p.listed&&!p.injury&&Math.random()<(listed.length?.025:.045))];
+ candidates.forEach(p=>{if(game.offers.some(o=>o.playerId===p.id))return;const loan=Math.random()<.28;const factor=loan?.10+Math.random()*.10:.78+Math.random()*.48;game.offers.push({id:'offer-'+Math.random().toString(36).slice(2),playerId:p.id,playerName:p.name,club:pick(['Ajax','Sevilla','Lazio','Feyenoord','Rennes','Sporting CP','Fiorentina','Braga','Nice']),type:loan?'Kiralama':'Bonservis',fee:+(p.value*factor).toFixed(2),wageShare:loan?Math.round(35+Math.random()*45):100,week:game.week,status:'Bekliyor'});});
+}
+function offerAction(id,action){const o=(game.offers||[]).find(x=>x.id===id);if(!o)return;const t=clubObj(game.user),p=t.players.find(x=>x.id===o.playerId);if(!p){game.offers=game.offers.filter(x=>x.id!==id);save();render();return}
+ if(action==='reject'){o.status='Reddedildi';game.news.unshift(`${p.name} için ${o.club} teklifini reddettin.`)}
+ else if(action==='accept'){if(o.type==='Bonservis'){game.budget+=o.fee;t.players=t.players.filter(x=>x.id!==p.id);t.rating=Math.round(t.players.reduce((sum,x)=>sum+x.rating,0)/Math.max(1,t.players.length));game.news.unshift(`${p.name}, ${o.club} takımına ${money(o.fee)} bedelle transfer oldu.`)}else{game.budget+=o.fee;p.loaned=true;p.loanWeeks=34;p.listed=false;game.news.unshift(`${p.name}, ${o.club} takımına kiralandı.`)}o.status='Kabul edildi'}
+ else if(action==='negotiate'){o.fee=+(o.fee*1.18).toFixed(2);o.status='Revize teklif bekleniyor';toast('Karşı kulübe %18 daha yüksek bedel iletildi')}
+ save();render();
+}
+function renewContract(id){const p=clubObj(game.user).players.find(x=>x.id===id);if(!p)return;const ask=Math.round(p.wage*(1.08+(p.rating>82?.12:0)));if(game.budget<.15){toast('Sözleşme imzası için bütçede en az €150.000 olmalı');return}document.getElementById('modal').innerHTML=`<div class="modal"><div class="modalbox"><h2>${p.name} · Sözleşme yenileme</h2><p>Mevcut: ${p.years} yıl · ${fmt(p.wage)} €/hafta</p><p>Talep: ${fmt(ask)} €/hafta · Yeni sözleşme: 3 yıl</p><div class="actions"><button class="primary" onclick="confirmRenew('${id}',${ask})">Kabul et</button><button class="ghost" onclick="closeModal()">Vazgeç</button></div></div></div>`}
+function confirmRenew(id,wage){const t=clubObj(game.user),p=t.players.find(x=>x.id===id);if(!p)return;const total=t.players.reduce((s,x)=>s+(Number(x.wage)||0),0)-p.wage+wage;if(total>(t.wageBudget||1.2)*1e6){toast('Haftalık maaş bütçesi yetersiz');return}game.budget-=.15;p.wage=wage;p.years=3;save();closeModal();render();toast('Sözleşme 3 yıl uzatıldı')}
+const sponsorCatalog=[
+{name:'Anadolu Finans',slot:'Ana sponsor',value:5.2,rep:62,rank:8,fan:55,goal:'İlk 8 içinde bitir'},
+{name:'Marmara Enerji',slot:'Forma göğüs',value:4.4,rep:55,rank:10,fan:48,goal:'Sezonu ilk 10 içinde bitir'},
+{name:'Atlas Havayolları',slot:'Forma kol',value:2.0,rep:48,rank:12,fan:40,goal:'En az 12 galibiyet al'},
+{name:'KentBank',slot:'Şort sponsoru',value:1.6,rep:42,rank:14,fan:35,goal:'Ligde kal'},
+{name:'Nova Teknoloji',slot:'Stadyum isim hakkı',value:6.0,rep:70,rank:6,fan:65,goal:'İlk 6 içinde bitir'},
+{name:'Pera Sigorta',slot:'Antrenman kiti',value:1.1,rep:35,rank:18,fan:25,goal:'Sezonu tamamla'},
+{name:'Ege Otomotiv',slot:'Ulaşım sponsoru',value:1.4,rep:40,rank:16,fan:30,goal:'En az 8 galibiyet al'},
+{name:'Doruk Gıda',slot:'Maç günü sponsoru',value:1.3,rep:38,rank:15,fan:35,goal:'İç sahada 6 maç kazan'},
+{name:'Vizyon Medya',slot:'Dijital içerik sponsoru',value:1.0,rep:32,rank:18,fan:30,goal:'Taraftar desteğini koru'},
+{name:'Yıldız Spor',slot:'Malzeme sponsoru',value:1.8,rep:45,rank:13,fan:38,goal:'İlk 13 içinde bitir'},
+{name:'Kuzey İnşaat',slot:'Stadyum reklamı',value:2.5,rep:50,rank:11,fan:45,goal:'En az 10 galibiyet al'},
+{name:'Rota İletişim',slot:'Altyapı sponsoru',value:1.2,rep:36,rank:17,fan:28,goal:'Genç oyuncuya süre ver'}
+];
+function refreshSponsorOffers(){
+ if(!game)return;
+ game.sponsorOffers=Array.isArray(game.sponsorOffers)?game.sponsorOffers:[];
+ game.sponsorOffers=game.sponsorOffers.filter(o=>(!o.expiresWeek||o.expiresWeek>=game.week)&&!game.sponsors.some(x=>x.slot===o.slot));
+ if(game.week>34){game.sponsorOffers=[];return;}
+ const rank=table().findIndex(t=>t.name===game.user)+1;
+ const existing=new Set(game.sponsorOffers.map(o=>o.name));
+ const eligible=sponsorCatalog.filter(o=>!existing.has(o.name)&&!game.sponsors.some(x=>x.slot===o.slot)&&game.rep>=Math.max(25,o.rep-18)&&rank<=Math.min(18,o.rank+6));
+ const shuffled=[...eligible].sort(()=>Math.random()-.5);
+ const slots=Math.max(0,6-game.sponsorOffers.length);
+ game.sponsorOffers.push(...shuffled.slice(0,slots).map(o=>({...o,expiresWeek:Math.min(34,game.week+4)})));
+}
+
+function sponsor(index){
+ const offer=(game.sponsorOffers||[])[index];if(!offer){toast('Bu teklif artık mevcut değil');return}
+ const rank=table().findIndex(t=>t.name===game.user)+1;
+ if(game.sponsors.some(x=>x.slot===offer.slot)){toast('Bu sponsorluk alanı zaten dolu');return}
+ if(game.rep<offer.rep||rank>offer.rank||game.fan<offer.fan){toast('Sponsor şartları henüz karşılanmıyor');return}
+ game.sponsors.push({name:offer.name,slot:offer.slot,value:offer.value,goal:offer.goal,rank:offer.rank,rep:offer.rep,fan:offer.fan,paid:offer.value*.25,total:offer.value,signWeek:game.week});
+ game.budget+=offer.value*.25;
+ game.news.unshift(`${offer.name} ile ${offer.slot} anlaşması imzalandı. İlk ödeme bütçeye aktarıldı.`);
+ game.sponsorOffers=(game.sponsorOffers||[]).filter(x=>x.name!==offer.name);
+ save();render();toast('Anlaşma imzalandı · sezonluk ödemenin %25’i aktarıldı');
+}
+function processSponsorPayments(){
+ if(!game||game.week%8!==0)return;
+ const rank=table().findIndex(t=>t.name===game.user)+1;
+ (game.sponsors||[]).forEach(sp=>{
+  if(sp.paid===undefined)sp.paid=sp.value*.25;
+  const eligible=rank<=Math.min(18,sp.rank||18)&&game.fan>=(sp.fan||0);
+  if(eligible&&sp.paid<sp.total){const payment=Math.min(sp.value*.25,sp.total-sp.paid);game.budget+=payment;sp.paid+=payment;game.news.unshift(`${sp.name} performans ödemesi: ${money(payment)}.`)}
+ });
+ refreshSponsorOffers();
+}
+
+function makeLowerTeam(name){
+ const base=lowerRatings[name]||61, roster=realRosters[name]||[];
+ const players=Array.from({length:Math.max(22,roster.length)},(_,i)=>makePlayer(name,i,base));
+ return {name,rating:base,budget:base>=66?18:base>=63?12:8,wageBudget:.65,players,points:0,played:0,w:0,d:0,l:0,gf:0,ga:0};
+}
+function resetTeamSeason(t){t.points=t.played=t.w=t.d=t.l=t.gf=t.ga=0}
+function buildFixtures(teamNames){
+ const fs=[],arr=[...teamNames];
+ for(let r=0;r<teamNames.length-1;r++){
+  for(let i=0;i<teamNames.length/2;i++){
+   const a=arr[i],b=arr[arr.length-1-i];
+   fs.push({round:r+1,home:r%2?b:a,away:r%2?a:b,played:false});
+  }
+  arr.splice(1,0,arr.pop());
+ }
+ const first=[...fs];first.forEach(f=>fs.push({round:f.round+teamNames.length-1,home:f.away,away:f.home,played:false}));
+ return fs;
+}
+function acceptJob(name){
+ const oldManager=game.manager, oldSeason=game.season;
+ game=fresh(name,oldManager);game.season=oldSeason;game.week=1;
+ game.news.unshift(`Yeni görev: ${name}. Yönetim yeni sezonda başarı bekliyor.`);
+ game.weeklyWage=clubObj(game.user).players.reduce((s,p)=>s+p.wage,0);
+ save();page='home';document.getElementById('modal').innerHTML='';render();toast(name+' ile anlaşıldı');
+}
+function showJobOffers(){
+ const options=clubs.filter(c=>c[0]!==game.user).sort(()=>Math.random()-.5).slice(0,4);
+ document.getElementById('modal').innerHTML=`<div class="modal"><div class="modalbox"><h2>Yeni kulüp arayışı</h2><p>Yönetim küme düşmenin ardından görevine son verdi. Aşağıdaki kulüplerden biriyle anlaşabilirsin.</p><div class="grid teams">${options.map(c=>`<div class="card"><b>${c[0]}</b><p>Takım gücü ${c[1]} · Bütçe ${money(c[2])}</p><button class="primary" onclick="acceptJob('${c[0]}')">Teklifi kabul et</button></div>`).join('')}</div></div></div>`;
+}
+function newSeason(){
+ if(game.week<=34&&!confirm('Sezon tamamlanmadı. Yine de yeni sezona geçilsin mi?'))return;
+ const oldTable=table(),champion=oldTable[0],userRank=oldTable.findIndex(x=>x.name===game.user)+1;
+ game.history.push({season:game.season,champion:champion.name,rank:userRank});
+ const prize=userRank===1?15:userRank<=3?8:userRank<=5?4:1;game.budget+=prize;
+ const relegated=oldTable.slice(-3).map(t=>t.name);
+ // Üç yükselen, resmî TFF 1. Lig kulüp havuzundan rastgele seçilir.
+ const pool=lowerLeagueTeams.filter(n=>lowerRatings[n]&&realRosters[n]&&realRosters[n].length>=20);
+ const promoted=[...pool].sort(()=>Math.random()-.5).slice(0,3);
+ const fired=relegated.includes(game.user);
+ game.teams=game.teams.filter(t=>!relegated.includes(t.name));
+ promoted.forEach(n=>game.teams.push(makeLowerTeam(n)));
+ game.season++;game.week=1;
+ game.teams.forEach(t=>{resetTeamSeason(t);t.players?.forEach(p=>{p.age++;p.apps=p.goals=p.assists=0;p.injury=0;p.form=7;p.rating=Math.min(p.potential,p.rating+(p.age<25?rand(0,1):p.age>31?rand(-1,0):0));p.years=Math.max(0,p.years-1)})});
+ game.fixtures=buildFixtures(game.teams.map(t=>t.name));
+ game.sponsors=[];game.sponsorOffers=[];refreshSponsorOffers();
+ game.news.unshift(`${game.season}/${game.season+1} sezonu başladı. Şampiyon: ${champion.name}. Küme düşenler: ${relegated.join(', ')}. Yükselenler: ${promoted.join(', ')}.`);
+ save();
+ if(fired){showJobOffers();return}
+ game.news.unshift('Yönetim yeni sezon hedeflerini açıkladı.');
+ page='home';render();toast('Yeni sezon başladı · 3 takım yükseldi, 3 takım düştü');
+}
+let splashTimer=null;
+function renderStart(){
+ if(load()){render();return}
+ document.getElementById('app').innerHTML=`<section class="splash"><div class="splash-inner">
+   <div class="studio-mark">𝐸 𝐺𝑎𝑚𝑒𝑠 𝑆𝑡𝑢𝑑𝑖𝑜𝑠</div>
+   <div class="game-mark">𝑅𝑖𝑠𝑒 𝑡𝑜 𝐺𝑙𝑜𝑟𝑦</div>
+   <div class="loading-label">Yükleniyor...</div>
+   <div class="progress-track"><div class="progress-fill"></div></div>
+ </div></section>`;
+ if(splashTimer)clearTimeout(splashTimer);
+ splashTimer=setTimeout(renderMainMenu,4300);
+}
+function renderMainMenu(){
+ document.getElementById('app').innerHTML=`<section class="main-menu"><div class="menu-panel">
+   <div class="small" style="letter-spacing:3px">E GAMES STUDIOS</div>
+   <div class="menu-logo">Rise to Glory</div>
+   <p class="menu-quote">“Büyük takımlar kupaları kazanır, büyük menajerler ise bir miras bırakır.”</p>
+   <div class="menu-actions">
+     <button onclick="showTutorial()">Öğretici</button>
+     <button class="primary" onclick="showTeams()">Kariyere Başla</button>
+   </div>
+   <div class="menu-foot">TÜRKİYE SÜPER LİG · FOOTBALL MANAGER SIMULATION</div>
+ </div></section>`;
+}
+function showTutorial(){
+ document.getElementById('app').innerHTML=`<div class="wrap" style="max-width:850px;padding-top:8vh">
+   <div class="topbar"><div><div class="brand">RISE TO GLORY</div><h2>Oyunun Öğreticisi</h2><p class="sub">Teknik direktörlük kariyerine başlamadan önce temel sistemleri öğren.</p></div><button class="ghost" onclick="renderMainMenu()">← Ana menü</button></div>
+   <div class="tutorial-list">
+    <div class="tutorial-step"><div class="tutorial-number">1</div><div><b>Kulübünü ve menajerini oluştur</b> Kariyere Başla bölümünden Süper Lig takımını seç, ardından menajer adını gir.</div></div>
+    <div class="tutorial-step"><div class="tutorial-number">2</div><div><b>Kadronu tanı</b> Kadrom ekranında futbolcuların mevkilerini, reytinglerini, yaşlarını, maaşlarını ve sözleşmelerini incele.</div></div>
+    <div class="tutorial-step"><div class="tutorial-number">3</div><div><b>İlk 11 ve taktik</b> Taktikler ekranından dizilişini, oyun planını ve sahaya çıkacak 11 futbolcuyu belirle.</div></div>
+    <div class="tutorial-step"><div class="tutorial-number">4</div><div><b>Transfer ve finans</b> Transfer Merkezi'nden oyuncu satın alabilir veya kiralayabilir; Oyuncu Satışları ve Sponsorluklar bölümlerinden bütçeni yönetebilirsin.</div></div>
+    <div class="tutorial-step"><div class="tutorial-number">5</div><div><b>Maçları oyna</b> Ana Sayfa'daki maç butonuna bas. Karşılaşma 10 saniyelik canlı sunumla ilerler; skorboard ve spiker anlatımı maç boyunca güncellenir.</div></div>
+    <div class="tutorial-step"><div class="tutorial-number">6</div><div><b>Sezonu takip et</b> Lig Tablosu, Fikstür ve Lig İstatistikleri ekranlarından sıralamayı, gol krallığını ve asist krallığını takip et. Sezon sonunda yeni sezon ekranını kullan.</div></div>
+   </div>
+   <div class="card"><p class="small">İpucu: Kariyer sırasında Kaydet düğmesini kullanarak ilerlemeni cihazında saklayabilirsin.</p><button class="primary" style="width:100%" onclick="showTeams()">Anladım · Kariyere Başla</button></div>
+ </div>`;
+}
+function showTeams(){document.getElementById('app').innerHTML=`<div class="wrap"><div class="topbar"><div><div class="brand">RISE TO GLORY</div><h2>Takımını seç</h2><p class="sub">2026/27 Süper Lig · 18 kulüp · Gerçek futbolcu adları, oyun içi kurgusal özellikler</p></div><button class="ghost" onclick="renderMainMenu()">← Ana menü</button></div><div class="grid teams">${clubs.map(c=>`<div class="team ${selected===c[0]?'selected':''}" onclick="selected='${c[0]}';showTeams()"><div class="teamtop"><div class="crest">${c[0].split(' ').map(x=>x[0]).join('').slice(0,3)}</div><div><h3>${c[0]}</h3><span class="small">Türkiye · Süper Lig</span></div></div><div class="metric"><span>Takım gücü</span><b>${c[1]}</b></div><div class="metric"><span>Transfer bütçesi</span><b>${money(c[2])}</b></div><div class="metric"><span>Kadro değeri (tahmini)</span><b>${money(c[3])}</b></div><div class="metric"><span>Sezon hedefi</span><b>${c[1]>=80?'Şampiyonluk':c[1]>=73?'İlk 5':'İlk 12'}</b></div></div>`).join('')}</div><div class="card" style="margin-top:18px"><h2>Teknik direktörünü oluştur</h2><div class="row"><input class="field" id="managerName" placeholder="Teknik direktör adı (örn. Emir Yılmaz)"><button class="primary" onclick="startCareer()" ${selected?'':'disabled'}>Kariyeri başlat</button></div><p class="small">Önce bir kulüp seç, ardından teknik direktör adını yaz.</p></div><p class="small">Veri notu: Her kulübün ilk 12 oyuncu adı 28.10.2026 tarihli 2026/27 kadro listelerine göre güncellenmiştir; kalan kadro slotları oyun için üretilen genç oyunculardır. Reyting, potansiyel, piyasa değeri ve bütçeler oyun dengesi için tahminidir.</p></div>`}
+try{renderStart();}catch(e){console.error(e);document.getElementById('app').innerHTML='<section class="hero"><div><h1>RISE TO GLORY</h1><p>Oyun başlatılırken bir sorun oluştu. Sayfayı Chrome veya başka bir tarayıcıda açmayı deneyin.</p><button class="primary" onclick="localStorage.removeItem(\'legendary_coach_save_v4\');location.reload()">Kaydı sıfırla ve yeniden aç</button><p class="small">E GAMES STUDIOS</p></div></section>';}
+
+document.addEventListener('click',function(event){
+ const button=event.target.closest('button');
+ if(!button||button.disabled)return;
+ button.classList.remove('tap-pop');
+ void button.offsetWidth;
+ button.classList.add('tap-pop');
+ const clear=()=>button.classList.remove('tap-pop');
+ button.addEventListener('animationend',clear,{once:true});
+});
+</script></body></html>
